@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:hltb/screens/game-detail/game-detail.dart';
 
 class GameCard extends StatelessWidget {
   final String id;
@@ -21,93 +22,106 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        color: Colors.black87,
-        height: 100,
-        child: Row(
-          children: [
-            Image.network(
-              'https://howlongtobeat.com' + imageUrl,
-              height: 100,
-              width: 80,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  // color: Colors.red,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 30,
-                        // color: Colors.white,
-                        child: Text(
-                          name,
-                          style: TextStyle(
+    return GestureDetector(
+      onTap: () {
+        print(id);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GameDetail(id),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          color: Colors.black87,
+          height: 100,
+          child: Row(
+            children: [
+              Image.network(
+                'https://howlongtobeat.com' + imageUrl,
+                height: 100,
+                width: 80,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 30,
+                          child: Text(
+                            name,
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            color: Colors.blue,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  gameplayMain,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              color: Colors.blue,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    'Main Story',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                Text('6 hours'),
-                              ],
+                                  Text(gameplayMain + ' hours'),
+                                ],
+                              ),
                             ),
-                          ),
-                          Container(
-                            color: Colors.purple,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  gameplayMainExtra,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                            Container(
+                              color: Colors.purple,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    'Main + Extra',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                Text('6 hours'),
-                              ],
+                                  Text(gameplayMainExtra + ' hours'),
+                                ],
+                              ),
                             ),
-                          ),
-                          Container(
-                            color: Colors.red,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  gameplayCompletionist,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                            Container(
+                              color: Colors.red,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    'Completionist',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                Text('6 hours'),
-                              ],
+                                  Text(gameplayCompletionist + ' hours'),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

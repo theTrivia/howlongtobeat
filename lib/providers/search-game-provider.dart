@@ -10,6 +10,11 @@ class SearchGameProvider extends ChangeNotifier {
     return _searchResult;
   }
 
+  setSearchResultToNull() {
+    _searchResult = [];
+    notifyListeners();
+  }
+
   searchGames(gameName) async {
     try {
       var result = await http

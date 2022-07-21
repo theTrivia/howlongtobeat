@@ -59,11 +59,12 @@ class _GamesListState extends State<GamesList> {
                       .toString(),
                   gameplayMainExtra: context
                       .watch<SearchGameProvider>()
-                      .searchResult[index]['gameplayMain']
+                      .searchResult[index]['gameplayMainExtra']
                       .toString(),
                   gameplayCompletionist: context
                       .watch<SearchGameProvider>()
-                      .searchResult[index]['id'],
+                      .searchResult[index]['gameplayCompletionist']
+                      .toString(),
                 );
               })));
     }));

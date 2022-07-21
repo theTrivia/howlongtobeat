@@ -9,6 +9,9 @@ void main() {
       ChangeNotifierProvider(
         create: (_) => SearchGameProvider(),
       ),
+      ChangeNotifierProvider(
+        create: (_) => SearchGameProvider(),
+      ),
     ],
     child: MyApp(),
   ));
