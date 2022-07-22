@@ -29,22 +29,6 @@ class _GamesListState extends State<GamesList> {
               itemCount:
                   context.watch<SearchGameProvider>().searchResult.length,
               itemBuilder: ((context, index) {
-                print(
-                  context.watch<SearchGameProvider>().searchResult[index]['id'],
-                );
-                print(
-                  context.watch<SearchGameProvider>().searchResult[index]
-                      ['name'],
-                );
-                print(
-                  context.watch<SearchGameProvider>().searchResult[index]
-                      ['gameplayMainExtra'],
-                );
-                print(
-                  context.watch<SearchGameProvider>().searchResult[index]
-                      ['imageUrl'],
-                );
-
                 return GameCard(
                   id: context.watch<SearchGameProvider>().searchResult[index]
                       ['id'],
