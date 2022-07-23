@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hltb/components/loading-anime.dart';
+import 'package:hltb/common/loading-anime.dart';
 import 'package:hltb/providers/search-game-provider.dart';
 import 'package:hltb/screens/games-list/games-list.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +13,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  var shouldWeLoad = false;
+  var _shouldWeLoadAnime = false;
+  var _fetchingResultFinished = false;
+  var _searchResultTerm = '';
   @override
   Widget build(BuildContext context) {
     var gameSearchEditingController = TextEditingController();
@@ -25,33 +27,77 @@ class _MainPageState extends State<MainPage> {
           const Text(
             'howlongtobeat',
             style: TextStyle(
-              fontSize: 20,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+              fontSize: 25,
+              color: Color.fromARGB(255, 72, 0, 255),
+              fontWeight: FontWeight.w900,
             ),
           ),
-          Stack(
-            alignment: AlignmentDirectional.bottomEnd,
-            children: [
-              TextFormField(
-                controller: gameSearchEditingController,
-              ),
-              RaisedButton(
-                onPressed: () async {
-                  setState(() {
-                    shouldWeLoad = true;
-                  });
-                  await Provider.of<SearchGameProvider>(context, listen: false)
-                      .searchGames(gameSearchEditingController.text);
-                  setState(() {
-                    shouldWeLoad = false;
-                  });
-                },
-                child: const Text('Search'),
-              ),
-            ],
+          const SizedBox(
+            height: 10,
           ),
-          (shouldWeLoad == true) ? LoadingAnime() : GamesList(),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 8,
+              right: 8,
+            ),
+            child: Stack(
+              alignment: AlignmentDirectional.bottomEnd,
+              children: [
+                TextFormField(
+                  controller: gameSearchEditingController,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 72, 0, 255),
+                      fontWeight: FontWeight.bold),
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 72, 0, 255),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 72, 0, 255),
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () async {
+                    setState(() {
+                      _shouldWeLoadAnime = true;
+                      _searchResultTerm = gameSearchEditingController.text;
+                    });
+                    await Provider.of<SearchGameProvider>(context,
+                            listen: false)
+                        .searchGames(gameSearchEditingController.text);
+                    setState(() {
+                      _shouldWeLoadAnime = false;
+                      _fetchingResultFinished = true;
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                    color: Color.fromARGB(255, 72, 0, 255),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          (_fetchingResultFinished == true)
+              ? Text(
+                  'Search Result for \'${_searchResultTerm}\'',
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 72, 0, 255),
+                    fontWeight: FontWeight.w900,
+                  ),
+                )
+              : Container(),
+          (_shouldWeLoadAnime == true) ? const LoadingAnime() : GamesList(),
         ],
       )),
     );

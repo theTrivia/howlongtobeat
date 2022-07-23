@@ -24,7 +24,6 @@ class GameCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print(id);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -36,8 +35,10 @@ class GameCard extends StatelessWidget {
         padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(5),
+            side: const BorderSide(
+              color: Colors.white,
+            ),
           ),
           color: const Color.fromARGB(18, 199, 198, 198),
           // height: 100,
@@ -61,7 +62,7 @@ class GameCard extends StatelessWidget {
                             (name.length > 22)
                                 ? '${name.substring(0, 22)}...'
                                 : name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -77,7 +78,7 @@ class GameCard extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Main Story',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -93,7 +94,7 @@ class GameCard extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Main + Extra',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -109,7 +110,7 @@ class GameCard extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Completionist',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
