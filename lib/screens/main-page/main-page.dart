@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hltb/components/loading-anime.dart';
 import 'package:hltb/providers/search-game-provider.dart';
 import 'package:hltb/screens/games-list/games-list.dart';
 import 'package:http/http.dart' as http;
-import 'package:hltb/screens/game-card/game-card.dart';
 import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,13 +13,23 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  var shouldWeLoad = false;
   @override
   Widget build(BuildContext context) {
     var gameSearchEditingController = TextEditingController();
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
           child: Column(
         children: [
+          const Text(
+            'howlongtobeat',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           Stack(
             alignment: AlignmentDirectional.bottomEnd,
             children: [
@@ -28,22 +38,20 @@ class _MainPageState extends State<MainPage> {
               ),
               RaisedButton(
                 onPressed: () async {
-                  // await http
-                  //     .get(Uri.parse(
-                  //         'http://192.168.0.182:3000/getGames/call of duty vanguard'))
-                  //     .then(
-                  //       (value) => print(value.body),
-                  //     );
+                  setState(() {
+                    shouldWeLoad = true;
+                  });
                   await Provider.of<SearchGameProvider>(context, listen: false)
                       .searchGames(gameSearchEditingController.text);
-
-                  // print(context.watch<SearchGameProvider>().searchResult);
+                  setState(() {
+                    shouldWeLoad = false;
+                  });
                 },
-                child: Text('Search'),
+                child: const Text('Search'),
               ),
             ],
           ),
-          GamesList(),
+          (shouldWeLoad == true) ? LoadingAnime() : GamesList(),
         ],
       )),
     );

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hltb/components/loading-anime.dart';
 import 'package:http/http.dart' as http;
 
 class GameDetail extends StatefulWidget {
@@ -13,6 +14,7 @@ class GameDetail extends StatefulWidget {
 
 class _GameDetailState extends State<GameDetail> {
   var gameDetail;
+  var shouldWeLoad = true;
   getGameDetail(gameId) async {
     try {
       var result = await http
@@ -32,6 +34,7 @@ class _GameDetailState extends State<GameDetail> {
       print(res);
       setState(() {
         gameDetail = res;
+        shouldWeLoad = false;
       });
     });
   }
@@ -39,33 +42,64 @@ class _GameDetailState extends State<GameDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
             left: 10,
             right: 10,
           ),
-          child: ListView(
-            children: [
-              Text(
-                gameDetail['name'],
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+          child: (gameDetail == null)
+              ? const LoadingAnime()
+              : ListView(
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          gameDetail['name'],
+                          style: const TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Image.network(
+                          'https://howlongtobeat.com' + gameDetail['imageUrl'],
+                        ),
+                        const Text(
+                          'Description',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          gameDetail['description'],
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          'Playable On',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          gameDetail['playableOn'][0],
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
                 ),
-              ),
-              Image.network(
-                'https://howlongtobeat.com' + gameDetail['imageUrl'],
-              ),
-              Text('Description'),
-              Text(gameDetail['description']),
-              SizedBox(
-                height: 10,
-              ),
-              Text('Playable On'),
-              Text(gameDetail['playableOn'][0])
-            ],
-          ),
         ),
       ),
     );

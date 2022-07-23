@@ -3,27 +3,12 @@ import 'package:hltb/providers/search-game-provider.dart';
 import 'package:hltb/screens/game-card/game-card.dart';
 import 'package:provider/provider.dart';
 
-class GamesList extends StatefulWidget {
-  const GamesList({Key? key}) : super(key: key);
-
-  @override
-  State<GamesList> createState() => _GamesListState();
-}
-
-class _GamesListState extends State<GamesList> {
+class GamesList extends StatelessWidget {
   var searchResult = [];
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final searchResults = context.watch<SearchGameProvider>().searchResult;
-  //   print(searchResults);
-  // }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(builder: ((context, snapshot) {
-      print(context.watch<SearchGameProvider>().searchResult);
-
       return Flexible(
           child: ListView.builder(
               itemCount:

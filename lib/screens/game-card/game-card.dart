@@ -33,10 +33,14 @@ class GameCard extends StatelessWidget {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          color: Colors.black87,
-          height: 100,
+        padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(color: Colors.white),
+          ),
+          color: const Color.fromARGB(18, 199, 198, 198),
+          // height: 100,
           child: Row(
             children: [
               Image.network(
@@ -54,7 +58,9 @@ class GameCard extends StatelessWidget {
                         SizedBox(
                           height: 30,
                           child: Text(
-                            name,
+                            (name.length > 22)
+                                ? '${name.substring(0, 22)}...'
+                                : name,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
