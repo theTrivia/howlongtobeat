@@ -11,60 +11,6 @@ class PlayTimeBoard extends StatelessWidget {
     required this.gameplayCompletionist,
   });
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Container(
-  //         color: Colors.blue,
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //           children: [
-  //             const Text(
-  //               'Main Story',
-  //               style: TextStyle(
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //             Text(gameplayMain + ' hours'),
-  //           ],
-  //         ),
-  //       ),
-  //       Container(
-  //         color: Colors.purple,
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //           children: [
-  //             const Text(
-  //               'Main + Extra',
-  //               style: TextStyle(
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //             Text(gameplayMainExtra + ' hours'),
-  //           ],
-  //         ),
-  //       ),
-  //       Container(
-  //         color: Colors.red,
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //           children: [
-  //             const Text(
-  //               'Completionist',
-  //               style: TextStyle(
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //             Text(gameplayCompletionist + ' hours'),
-  //           ],
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Column(

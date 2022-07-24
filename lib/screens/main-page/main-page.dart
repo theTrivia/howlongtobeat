@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hltb/common/loading-anime.dart';
 import 'package:hltb/providers/search-game-provider.dart';
 import 'package:hltb/screens/games-list/games-list.dart';
+import 'package:hltb/screens/statics/start-searching.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  var _didUserOpenAppNow = true;
   var _shouldWeLoadAnime = false;
   var _fetchingResultFinished = false;
   var _searchResultTerm = '';
@@ -68,6 +70,7 @@ class _MainPageState extends State<MainPage> {
                     setState(() {
                       _shouldWeLoadAnime = true;
                       _searchResultTerm = gameSearchEditingController.text;
+                      _didUserOpenAppNow = false;
                     });
                     await Provider.of<SearchGameProvider>(context,
                             listen: false)
@@ -88,6 +91,7 @@ class _MainPageState extends State<MainPage> {
           const SizedBox(
             height: 10,
           ),
+          (_didUserOpenAppNow == true) ? StartSearching() : Container(),
           (_fetchingResultFinished == true)
               ? Text(
                   'Search Result for \'${_searchResultTerm}\'',
