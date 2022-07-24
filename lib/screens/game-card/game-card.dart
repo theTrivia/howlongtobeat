@@ -3,6 +3,8 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:hltb/screens/game-detail/game-detail.dart';
 
+import '../../common/play-time-board.dart';
+
 class GameCard extends StatelessWidget {
   final String id;
   final String name;
@@ -69,59 +71,11 @@ class GameCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              color: Colors.blue,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  const Text(
-                                    'Main Story',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(gameplayMain + ' hours'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              color: Colors.purple,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  const Text(
-                                    'Main + Extra',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(gameplayMainExtra + ' hours'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              color: Colors.red,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  const Text(
-                                    'Completionist',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(gameplayCompletionist + ' hours'),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
+                        PlayTimeBoard(
+                          gameplayMain: gameplayMain,
+                          gameplayMainExtra: gameplayMainExtra,
+                          gameplayCompletionist: gameplayCompletionist,
+                        ),
                       ],
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hltb/common/loading-anime.dart';
+import 'package:hltb/common/play-time-board.dart';
 import 'package:http/http.dart' as http;
 
 class GameDetail extends StatefulWidget {
@@ -87,63 +88,12 @@ class _GameDetailState extends State<GameDetail> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                color: Colors.blue,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    const Text(
-                                      'Main Story',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(gameDetail['gameplayMain'].toString() +
-                                        ' hours'),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                color: Colors.purple,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    const Text(
-                                      'Main + Extra',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(gameDetail['gameplayMainExtra']
-                                            .toString() +
-                                        ' hours'),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                color: Colors.red,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    const Text(
-                                      'Completionist',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(gameDetail['gameplayCompletionist']
-                                            .toString() +
-                                        ' hours'),
-                                  ],
-                                ),
-                              ),
-                            ],
+                          PlayTimeBoard(
+                            gameplayMain: gameDetail['gameplayMain'].toString(),
+                            gameplayMainExtra:
+                                gameDetail['gameplayMainExtra'].toString(),
+                            gameplayCompletionist:
+                                gameDetail['gameplayCompletionist'].toString(),
                           ),
                           const SizedBox(
                             height: 10,
