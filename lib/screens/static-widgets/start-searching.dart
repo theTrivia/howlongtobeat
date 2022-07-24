@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StartSearching extends StatelessWidget {
   const StartSearching({Key? key}) : super(key: key);
@@ -22,9 +21,7 @@ class StartSearching extends StatelessWidget {
               Icons.gamepad,
               color: Color.fromARGB(86, 72, 0, 255),
               size: 75.0,
-              semanticLabel: 'Text to announce in accessibility modes',
             ),
-            // Icon(icon: Icon(FaIcon(FontAwesomeIcons.gamepad)))
           ],
         ),
       ),
