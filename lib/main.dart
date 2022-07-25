@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hltb/providers/search-game-provider.dart';
+import 'package:hltb/screens/landing-page/landing-page.dart';
 import 'package:provider/provider.dart';
 import 'package:hltb/screens/main-page/main-page.dart';
 
@@ -38,7 +39,7 @@ class MainMaterialApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MainPage(),
+      home: LandingPage(),
     );
   }
 }
