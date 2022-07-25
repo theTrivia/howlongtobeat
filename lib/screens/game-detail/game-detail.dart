@@ -3,11 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hltb/common/loading-anime.dart';
 import 'package:hltb/common/play-time-board.dart';
+import 'package:hltb/screens/game-detail/youtube-test.dart';
 import 'package:http/http.dart' as http;
+
+import '../../model/youtube-video.dart';
 
 class GameDetail extends StatefulWidget {
   final String gameId;
-  GameDetail(this.gameId);
+  GameDetail(this.gameId, {Key? key}) : super(key: key);
 
   @override
   State<GameDetail> createState() => _GameDetailState();
@@ -16,6 +19,8 @@ class GameDetail extends StatefulWidget {
 class _GameDetailState extends State<GameDetail> {
   var gameDetail;
   var shouldWeLoad = true;
+  var ytVideo = null;
+  var _ytVideoReceived = false;
   getGameDetail(gameId) async {
     try {
       var result = await http
@@ -28,11 +33,50 @@ class _GameDetailState extends State<GameDetail> {
     }
   }
 
+  fetchYoutubeVideoLink(gameName) async {
+    // var videoResult = await YoutubeTest.fetchVideo(gameName).then((res) {
+    //   ytVideo = YoutubeVideo(
+    //       res.channelId,
+    //       res.channelTitle,
+    //       res.channelUrl,
+    //       res.description,
+    //       res.duration,
+    //       res.id,
+    //       res.kind,
+    //       res.publishedAt,
+    //       res.thumbnail,
+    //       res.title,
+    //       res.url);
+    // });
+    var videoResult = await YoutubeTest.fetchVideo(gameName);
+    return videoResult;
+  }
+
   @override
   void initState() {
     super.initState();
     getGameDetail(widget.gameId).then((res) {
-      print(res);
+      fetchYoutubeVideoLink(res['name']).then((res) {
+        var video = YoutubeVideo(
+          res.channelId,
+          res.channelTitle,
+          res.channelUrl,
+          res.description,
+          res.duration,
+          res.id,
+          res.kind,
+          res.publishedAt,
+          res.thumbnail,
+          res.title,
+          res.url,
+        );
+
+        setState(() {
+          ytVideo = video;
+          _ytVideoReceived = true;
+        });
+      });
+
       setState(() {
         gameDetail = res;
         shouldWeLoad = false;
