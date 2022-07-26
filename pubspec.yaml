@@ -40,7 +40,8 @@ dependencies:
   youtube_api: ^1.0.4
   firebase_core: ^1.20.0
   firebase_auth: ^3.5.1
-  google_sign_in: '^4.5.1'
+  cloud_firestore: ^3.4.1
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:
