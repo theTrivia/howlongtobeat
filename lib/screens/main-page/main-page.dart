@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hltb/common/input-field.dart';
 import 'package:hltb/common/loading-anime.dart';
 import 'package:hltb/providers/search-game-provider.dart';
 import 'package:hltb/screens/games-list/games-list.dart';
@@ -45,25 +46,29 @@ class _MainPageState extends State<MainPage> {
             child: Stack(
               alignment: AlignmentDirectional.bottomEnd,
               children: [
-                TextFormField(
-                  controller: gameSearchEditingController,
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 72, 0, 255),
-                      fontWeight: FontWeight.bold),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 72, 0, 255),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 72, 0, 255),
-                      ),
-                    ),
-                  ),
+                // TextFormField(
+                //   controller: gameSearchEditingController,
+                //   style: const TextStyle(
+                //       color: Color.fromARGB(255, 72, 0, 255),
+                //       fontWeight: FontWeight.bold),
+                //   decoration: InputDecoration(
+                //     enabledBorder: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(10),
+                //       borderSide: const BorderSide(
+                //         color: Color.fromARGB(255, 72, 0, 255),
+                //       ),
+                //     ),
+                //     focusedBorder: OutlineInputBorder(
+                //       borderRadius: BorderRadius.circular(10),
+                //       borderSide: const BorderSide(
+                //         color: Color.fromARGB(255, 72, 0, 255),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                InputField(
+                  hintText: 'Search...',
+                  textEditingController: gameSearchEditingController,
                 ),
                 IconButton(
                   onPressed: () async {
