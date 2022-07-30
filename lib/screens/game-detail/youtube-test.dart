@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:hltb/api-static-creds.dart';
 import 'package:hltb/model/youtube-video.dart';
 import 'package:youtube_api/youtube_api.dart';
 
-import '../../static.dart';
+import '../../project-variables.dart';
 
 class YoutubeTest {
   static fetchVideo(videoGameName) async {
-    String apiKey = ProjectVariables.YOUTUBE_API_KEY;
+    String apiKey = ApiStaticCreds.YOUTUBE_API_KEY;
     YoutubeAPI ytApi = new YoutubeAPI(apiKey);
     var videoResult;
     String query = videoGameName;

@@ -13,7 +13,9 @@ class StartSearching extends StatelessWidget {
             Text(
               'Start Searching...',
               style: TextStyle(
-                color: Color.fromARGB(62, 255, 255, 255),
+                // color: Color.fromARGB(62, 255, 255, 255),
+                color: Color.fromARGB(86, 72, 0, 255),
+
                 fontSize: 30,
               ),
             ),

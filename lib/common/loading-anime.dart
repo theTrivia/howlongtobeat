@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hltb/project-variables.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoadingAnime extends StatelessWidget {
@@ -9,7 +10,7 @@ class LoadingAnime extends StatelessWidget {
     return Center(
       child: LoadingAnimationWidget.fallingDot(
         // color: const Color.fromARGB(255, 28, 28, 198),
-        color: const Color.fromARGB(255, 72, 0, 255),
+        color: ProjectVariables.MAIN_COLOR,
         size: 100,
       ),
     );
