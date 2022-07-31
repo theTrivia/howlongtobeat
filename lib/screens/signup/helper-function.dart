@@ -5,7 +5,8 @@ addNewUserToUsersDatabase(String uid) async {
   try {
     await db.collection('user-data').doc(uid).set(
       {
-        'user_id': uid,
+        'user-id': uid,
+        'fav-games': [],
       },
     );
   } catch (e) {

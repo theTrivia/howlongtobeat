@@ -36,13 +36,15 @@ flutter_*.png
 linked_*.ds
 unlinked.ds
 unlinked_spec.ds
-**/static.dart
+**/api-static-creds.dart
 
 # Web related
 
 
 # Symbolication related
 app.*.symbols
+
+
 
 
 
@@ -106,3 +108,5 @@ macos/
 
 #linux 
 linux/
+
+apk/

@@ -1,38 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:hltb/project-variables.dart';
 
 class InputField extends StatelessWidget {
   final String hintText;
   final TextEditingController textEditingController;
+  final Color hintTextColor;
+  final Color borderColor;
+  final Color inputTextColor;
+  final Color focusedBorderColor;
 
-  const InputField(
-      {Key? key, required this.hintText, required this.textEditingController})
-      : super(key: key);
+  const InputField({
+    Key? key,
+    required this.hintText,
+    required this.textEditingController,
+    required this.hintTextColor,
+    required this.borderColor,
+    required this.inputTextColor,
+    required this.focusedBorderColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: textEditingController,
-      style: const TextStyle(
-        color: Color.fromARGB(255, 72, 0, 255),
+      style: TextStyle(
+        color: inputTextColor,
         fontWeight: FontWeight.bold,
       ),
       decoration: InputDecoration(
-        hintStyle: const TextStyle(
+        hintStyle: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Color.fromARGB(67, 255, 255, 255),
+          color: hintTextColor,
         ),
         hintText: hintText,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color.fromARGB(255, 72, 0, 255),
+          borderSide: BorderSide(
+            color: borderColor,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Color.fromARGB(255, 72, 0, 255),
+          borderSide: BorderSide(
+            color: focusedBorderColor,
           ),
         ),
       ),
