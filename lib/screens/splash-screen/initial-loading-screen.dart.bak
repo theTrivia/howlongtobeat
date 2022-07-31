@@ -1,0 +1,79 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/user-favourite-game-provider.dart';
+
+class InitialLoadingScreen extends StatelessWidget {
+  final secureStorage = FlutterSecureStorage();
+  var _didUserFavDataLoad = false;
+  // fetchUserDetailsFromSecureStorage() {
+  //   final uid = secureStorage.read(key: 'uid');
+  //   print(uid);
+  //   return uid;
+  // }
+
+  doAsyncJob(context) async {
+    await Provider.of<UserFavouriteGameProvider>(context, listen: false)
+        .fetchFavouriteGameDetails();
+    print('halo');
+    // setState(() {
+    //   _didUserFavDataLoad = true;
+    // });
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   doAsyncJob().then((_) {
+  //     print('almost done');
+  //     secureStorage.read(key: 'uid').then((uid) {
+  //       print('lola');
+  //       if (uid == null) {
+  //         Navigator.pushNamed(context, '/login');
+  //       } else if (_didUserFavDataLoad == true) {
+  //         Navigator.pushNamed(context, '/mainPage');
+  //       }
+  //     });
+  //   });
+
+  @override
+  void initState(context) {
+    // TODO: implement initState
+    // super.initState();
+    secureStorage.read(key: 'uid').then((uid) {
+      if (uid == null) {
+        Navigator.pushNamed(context, '/login');
+      } else {
+        doAsyncJob(context).then((_) {
+          Navigator.pushNamed(context, '/mainPage');
+        });
+      }
+    });
+  }
+
+  // print(uid);
+  // if (uid == null) {
+  //   Navigator.pushNamed(context, '/login');
+  // } else {
+  //   Navigator.pushNamed(context, '/mainPage');
+  // }
+}
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Color.fromARGB(255, 72, 0, 255),
+    body: Center(
+      child: Text(
+        'howlongtobeat',
+        style: TextStyle(
+          fontSize: 35,
+          color: Colors.white,
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+    ),
+  );
+}

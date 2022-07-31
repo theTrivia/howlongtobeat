@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hltb/providers/search-game-provider.dart';
+import 'package:hltb/providers/user-favourite-game-provider.dart';
 import 'package:hltb/screens/game-card/game-card.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,18 @@ class GamesList extends StatelessWidget {
               itemCount:
                   context.watch<SearchGameProvider>().searchResult.length,
               itemBuilder: ((context, index) {
+                var isGamePresentInFavList;
+                if (context
+                    .watch<UserFavouriteGameProvider>()
+                    .userFavouriteGameList
+                    .contains(context
+                        .watch<SearchGameProvider>()
+                        .searchResult[index]['id'])) {
+                  isGamePresentInFavList = true;
+                } else {
+                  isGamePresentInFavList = false;
+                }
+
                 return GameCard(
                   id: context.watch<SearchGameProvider>().searchResult[index]
                       ['id'],
@@ -34,6 +47,7 @@ class GamesList extends StatelessWidget {
                       .watch<SearchGameProvider>()
                       .searchResult[index]['gameplayCompletionist']
                       .toString(),
+                  isGameAddedInFavList: isGamePresentInFavList,
                 );
               })));
     }));

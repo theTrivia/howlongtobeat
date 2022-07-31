@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hltb/common/loading-anime.dart';
-import 'package:hltb/providers/search-game-provider.dart';
-import 'package:hltb/screens/games-list/games-list.dart';
-import 'package:hltb/screens/static-widgets/start-searching.dart';
-import 'package:http/http.dart' as http;
+import 'package:hltb/screens/search-page/search-page.dart';
+import 'package:hltb/screens/user-fav/user-fav.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/user-favourite-game-provider.dart';
+import '../../project-variables.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -14,96 +14,54 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  var _didUserOpenAppNow = true;
-  var _shouldWeLoadAnime = false;
-  var _fetchingResultFinished = false;
-  var _searchResultTerm = '';
+  var _selectedindex = 0;
+  static List<Widget> _widgetOptions = [
+    SearchPage(),
+    UserFav(),
+  ];
+
+  //fetching user favourite games... [Needs to be refactored]
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Provider.of<UserFavouriteGameProvider>(context, listen: false)
+  //       .fetchFavouriteGameDetails();
+  // }
+
+  void _onItemTapped(index) {
+    setState(() {
+      _selectedindex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var gameSearchEditingController = TextEditingController();
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-          child: Column(
-        children: [
-          const Text(
-            'howlongtobeat',
-            style: TextStyle(
-              fontSize: 25,
-              color: Color.fromARGB(255, 72, 0, 255),
-              fontWeight: FontWeight.w900,
+      body: _widgetOptions.elementAt(_selectedindex),
+      extendBody: true,
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: ProjectVariables.MAIN_COLOR,
+          selectedItemColor: Colors.white,
+          // fixedColor: Colo,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 8,
-              right: 8,
-            ),
-            child: Stack(
-              alignment: AlignmentDirectional.bottomEnd,
-              children: [
-                TextFormField(
-                  controller: gameSearchEditingController,
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 72, 0, 255),
-                      fontWeight: FontWeight.bold),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 72, 0, 255),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 72, 0, 255),
-                      ),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    setState(() {
-                      _shouldWeLoadAnime = true;
-                      _searchResultTerm = gameSearchEditingController.text;
-                      _didUserOpenAppNow = false;
-                    });
-                    await Provider.of<SearchGameProvider>(context,
-                            listen: false)
-                        .searchGames(gameSearchEditingController.text);
-                    setState(() {
-                      _shouldWeLoadAnime = false;
-                      _fetchingResultFinished = true;
-                    });
-                  },
-                  icon: const Icon(
-                    Icons.search,
-                    color: Color.fromARGB(255, 72, 0, 255),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          (_didUserOpenAppNow == true) ? StartSearching() : Container(),
-          (_fetchingResultFinished == true)
-              ? Text(
-                  'Search Result for \'${_searchResultTerm}\'',
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 72, 0, 255),
-                    fontWeight: FontWeight.w900,
-                  ),
-                )
-              : Container(),
-          (_shouldWeLoadAnime == true) ? const LoadingAnime() : GamesList(),
-        ],
-      )),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: 'Favourites',
+            )
+          ],
+          currentIndex: _selectedindex,
+          onTap: _onItemTapped,
+        ),
+      ),
     );
   }
 }
