@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hltb/common/loading-anime.dart';
 import 'package:hltb/common/play-time-board.dart';
+import 'package:hltb/project-variables.dart';
 import 'package:hltb/screens/game-detail/youtube-test.dart';
 import 'package:http/http.dart' as http;
 
@@ -87,7 +88,8 @@ class _GameDetailState extends State<GameDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
+      // backgroundColor: ProjectVariables.BACKGROUND_COLOR,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -152,8 +154,9 @@ class _GameDetailState extends State<GameDetail> {
                           ),
                           Text(
                             gameDetail['description'],
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              // color: Colors.white,
+                              color: ProjectVariables.INPUT_TEXT_COLOR_2,
                             ),
                           ),
                           const SizedBox(
@@ -177,8 +180,9 @@ class _GameDetailState extends State<GameDetail> {
                                           1,
                                     )
                                 : 'Not Available',
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              // color: Colors.white,
+                              color: ProjectVariables.INPUT_TEXT_COLOR_2,
                             ),
                           ),
                         ],
