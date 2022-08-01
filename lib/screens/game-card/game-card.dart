@@ -39,7 +39,8 @@ class _GameCardState extends State<GameCard> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => GameDetail(widget.id),
+            builder: (context) =>
+                GameDetail(widget.id, widget.isGameAddedInFavList),
           ),
         );
       },

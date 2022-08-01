@@ -11,6 +11,7 @@ var db = FirebaseFirestore.instance;
 onFavIconPress(gameId, context) async {
   // print(gameId);
   await checkAndSaveGameIfUserLikesTheGame(gameId, context);
+  return;
 }
 
 //searches for the game id is present in user's database. If the game is not present, then the game is added
@@ -36,12 +37,14 @@ checkAndSaveGameIfUserLikesTheGame(gameId, context) async {
     Provider.of<UserFavouriteGameProvider>(context, listen: false)
         .fetchFavouriteGameDetails();
     print('game added to list successfully');
+    return;
   }
   // remove the game id from users database
   else {
     removeTheGameIdFromUserDatabase(userFavGames, gameId, _uid, context);
     // print('game already present in user\'s fav list');
     print('gameId removed from the user\'s list');
+    return;
   }
 }
 

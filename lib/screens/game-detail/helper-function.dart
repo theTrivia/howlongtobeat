@@ -60,11 +60,18 @@ fetchGameDetailFromMetcriticBackendServer(
 //fetch metacritic game score.
 fetchMetascoreFromMetacriticBackendServer(
     uniformPlatform, cleanedGameName) async {
-  var res = await http.get(Uri.parse(
-      ProjectVariables.METACRITIC_GAME_DETAIL_SERVER +
-          'metascore/' +
-          uniformPlatform +
-          '/' +
-          cleanedGameName));
-  return jsonDecode(res.body)['metascore'];
+  try {
+    var res = await http.get(Uri.parse(
+        ProjectVariables.METACRITIC_GAME_DETAIL_SERVER +
+            'metascore/' +
+            uniformPlatform +
+            '/' +
+            cleanedGameName));
+    if (jsonDecode(res.body)['metascore'] == null) {
+      return "Not Found";
+    }
+    return jsonDecode(res.body)['metascore'];
+  } catch (e) {
+    return "Not Found";
+  }
 }

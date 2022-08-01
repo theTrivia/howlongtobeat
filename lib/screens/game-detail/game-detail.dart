@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hltb/common/loading-anime.dart';
 import 'package:hltb/common/play-time-board.dart';
 import 'package:hltb/project-variables.dart';
@@ -9,11 +11,14 @@ import 'package:hltb/screens/game-detail/youtube-test.dart';
 import 'package:http/http.dart' as http;
 
 import '../../model/youtube-video.dart';
+import '../game-card/helper-function.dart';
 import './helper-function.dart';
 
 class GameDetail extends StatefulWidget {
   final String gameId;
-  GameDetail(this.gameId, {Key? key}) : super(key: key);
+  final bool isGameAddedInFavList;
+  GameDetail(this.gameId, this.isGameAddedInFavList, {Key? key})
+      : super(key: key);
 
   @override
   State<GameDetail> createState() => _GameDetailState();
@@ -27,6 +32,10 @@ class _GameDetailState extends State<GameDetail> {
   var _useMetacriticForGameDetails = true;
   var _metacriticGameDetail = '';
   var _metascore = '';
+  var _isIconButtonClicked = false;
+
+  // 0 == !fav , 1 == fav
+  var _favIcon = 0;
   getGameDetail(gameId) async {
     try {
       var result = await http
@@ -61,6 +70,12 @@ class _GameDetailState extends State<GameDetail> {
   @override
   void initState() {
     super.initState();
+    if (widget.isGameAddedInFavList == true) {
+      _favIcon = 1;
+    } else {
+      _favIcon = 0;
+    }
+    print(_favIcon);
     getGameDetail(widget.gameId).then((res) async {
       final videoGameName = res['name'];
 
@@ -134,142 +149,205 @@ class _GameDetailState extends State<GameDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.black,
       // backgroundColor: ProjectVariables.BACKGROUND_COLOR,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 10,
-            right: 10,
-          ),
-          child: (gameDetail == null)
-              ? const LoadingAnime()
-              : Column(
-                  children: [
-                    Text(
-                      gameDetail['name'],
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 25,
-                        color: Color.fromARGB(255, 72, 0, 255),
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Flexible(
-                      child: ListView(
+      body: Container(
+        decoration: BoxDecoration(
+          // color: Colors.black.withOpacity(100),
+          image: (gameDetail == null)
+              ? DecorationImage(
+                  image: NetworkImage(
+                      'https://s3.envato.com/files/16cdea6b-a392-482a-905c-541e480bc1ce/inline_image_preview.jpg'),
+                  fit: BoxFit.cover,
+                )
+              : DecorationImage(
+                  image: NetworkImage(
+                    'https://howlongtobeat.com' + gameDetail['imageUrl'],
+                  ),
+                  fit: BoxFit.fill,
+
+                  // opacity: 0.2,
+                ),
+        ),
+        child: Container(
+          color: Colors.black.withOpacity(0.8),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                ),
+                child: (gameDetail == null)
+                    ? const LoadingAnime()
+                    : Column(
                         children: [
-                          Column(
-                            children: [
-                              Image.network(
-                                'https://howlongtobeat.com' +
-                                    gameDetail['imageUrl'],
+                          FittedBox(
+                            child: Text(
+                              gameDetail['name'],
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 25,
+                                // color: Color.fromARGB(255, 72, 0, 255),
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
                               ),
-                            ],
+                            ),
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
-                          Row(
-                            children: [
-                              Expanded(
-                                // fit: FlexFit.loose,
-                                child: Metascore(ms: _metascore),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 50,
-                                height: 50,
-                                color: ProjectVariables.MAIN_COLOR_DARK,
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.favorite,
+                          Flexible(
+                            child: ListView(
+                              children: [
+                                Column(
+                                  children: [
+                                    Image.network(
+                                      'https://howlongtobeat.com' +
+                                          gameDetail['imageUrl'],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: (_metascore == 'Not Found')
+                                          ? Container()
+                                          : Metascore(ms: _metascore),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      color: ProjectVariables.MAIN_COLOR_DARK,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          if (_favIcon == 0) {
+                                            print(_favIcon);
+                                            setState(() {
+                                              _favIcon = 1;
+                                            });
+                                          } else if (_favIcon == 1) {
+                                            print(_favIcon);
+                                            setState(() {
+                                              _favIcon = 0;
+                                            });
+                                          }
+                                          onFavIconPress(
+                                              widget.gameId, context);
+
+                                          // setState(() {
+                                          //   _isIconButtonClicked = true;
+                                          // });
+                                        },
+                                        icon: (_favIcon == 0)
+                                            ? Icon(
+                                                FontAwesomeIcons.solidHeart,
+                                                color: Colors.white,
+                                              )
+                                            : Icon(
+                                                FontAwesomeIcons.heartCrack,
+                                                color: Colors.white,
+                                              ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  'How long to beat?',
+                                  style: TextStyle(
+                                    // color: Color.fromARGB(255, 72, 0, 255),
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                PlayTimeBoard(
+                                  gameplayMain:
+                                      gameDetail['gameplayMain'].toString(),
+                                  gameplayMainExtra:
+                                      gameDetail['gameplayMainExtra']
+                                          .toString(),
+                                  gameplayCompletionist:
+                                      gameDetail['gameplayCompletionist']
+                                          .toString(),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  'Description',
+                                  style: TextStyle(
+                                    // color: Color.fromARGB(255, 72, 0, 255),
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  (_useMetacriticForGameDetails == false)
+                                      ? gameDetail['description']
+                                      : _metacriticGameDetail,
+                                  style: TextStyle(
+                                    // color: Colors.white,
+                                    // color: ProjectVariables.INPUT_TEXT_COLOR_2,
                                     color: Colors.white,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Text(
-                            'How long to beat?',
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 72, 0, 255),
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          PlayTimeBoard(
-                            gameplayMain: gameDetail['gameplayMain'].toString(),
-                            gameplayMainExtra:
-                                gameDetail['gameplayMainExtra'].toString(),
-                            gameplayCompletionist:
-                                gameDetail['gameplayCompletionist'].toString(),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Text(
-                            'Description',
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 72, 0, 255),
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            (_useMetacriticForGameDetails == false)
-                                ? gameDetail['description']
-                                : _metacriticGameDetail,
-                            style: TextStyle(
-                              // color: Colors.white,
-                              color: ProjectVariables.INPUT_TEXT_COLOR_2,
-                            ),
-                          ),
-                          Text(
-                            (_useMetacriticForGameDetails == false)
-                                ? ''
-                                : 'Powered By Metacritic',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Text(
-                            'Playable On',
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 72, 0, 255),
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            (gameDetail['playableOn'].length > 0)
-                                ? gameDetail['playableOn'].toString().substring(
-                                      1,
-                                      gameDetail['playableOn']
-                                              .toString()
-                                              .length -
-                                          1,
-                                    )
-                                : 'Not Available',
-                            style: TextStyle(
-                              // color: Colors.white,
-                              color: ProjectVariables.INPUT_TEXT_COLOR_2,
+                                Text(
+                                  (_useMetacriticForGameDetails == false)
+                                      ? ''
+                                      : 'Powered By Metacritic',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Color.fromARGB(111, 255, 255, 255),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  'Playable On',
+                                  style: TextStyle(
+                                    // color: Color.fromARGB(255, 72, 0, 255),
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  (gameDetail['playableOn'].length > 0)
+                                      ? gameDetail['playableOn']
+                                          .toString()
+                                          .substring(
+                                            1,
+                                            gameDetail['playableOn']
+                                                    .toString()
+                                                    .length -
+                                                1,
+                                          )
+                                      : 'Not Available',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    // color: ProjectVariables.INPUT_TEXT_COLOR_2,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
