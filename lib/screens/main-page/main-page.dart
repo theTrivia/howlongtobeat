@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hltb/screens/search-page/search-page.dart';
-import 'package:hltb/screens/user-fav/user-fav.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../providers/user-favourite-game-provider.dart';
 import '../../project-variables.dart';
+import '../search-page/search-page.dart';
+import '../user-fav/user-fav.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);

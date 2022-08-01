@@ -1,17 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:hltb/firebase_options.dart';
-import 'package:hltb/providers/search-game-provider.dart';
-import 'package:hltb/providers/user-favourite-game-provider.dart';
-import 'package:hltb/screens/splash-screen/splash-screen.dart';
-import 'package:hltb/screens/landing-page/landing-page.dart';
-import 'package:hltb/screens/login/login.dart';
-import 'package:hltb/screens/signup/signup.dart';
-import 'package:hltb/screens/user-fav/user-fav.dart';
 import 'package:provider/provider.dart';
-import 'package:hltb/screens/search-page/search-page.dart';
 
-import 'screens/main-page/main-page.dart';
+import './firebase_options.dart';
+
+import '../providers/user-favourite-game-provider.dart';
+import '../providers/search-game-provider.dart';
+import '../screens/splash-screen/splash-screen.dart';
+import '../screens/main-page/main-page.dart';
+import '../screens/login/login.dart';
+import '../screens/search-page/search-page.dart';
+import '../screens/signup/signup.dart';
+import '../screens/user-fav/user-fav.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

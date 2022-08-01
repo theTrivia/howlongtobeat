@@ -1,17 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:hltb/common/input-field.dart';
-import 'package:hltb/common/loading-anime.dart';
-import 'package:hltb/methods/logout.dart';
-import 'package:hltb/providers/search-game-provider.dart';
-import 'package:hltb/screens/games-list/games-list.dart';
-import 'package:hltb/screens/static-widgets/start-searching.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
+import '../../common/widgets/input-field.dart';
+import '../../common/widgets/loading-anime.dart';
+import '../../methods/logout.dart';
 import '../../project-variables.dart';
+import '../../providers/search-game-provider.dart';
+import '../games-list/games-list.dart';
+import '../static-widgets/start-searching.dart';
 
 class SearchPage extends StatefulWidget {
   @override

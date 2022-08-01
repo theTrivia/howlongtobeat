@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hltb/common/input-field.dart';
-import 'package:hltb/screens/signup/perform-signup.dart';
-import 'package:hltb/project-variables.dart';
+
+import './perform-signup.dart';
+import '../../common/widgets/input-field.dart';
+import '../../project-variables.dart';
 
 class Signup extends StatelessWidget {
   final secureStorage = FlutterSecureStorage();

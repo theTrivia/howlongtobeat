@@ -2,16 +2,17 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hltb/common/loading-anime.dart';
-import 'package:hltb/common/play-time-board.dart';
-import 'package:hltb/project-variables.dart';
-import 'package:hltb/screens/game-detail/metascore.dart';
-import 'package:hltb/screens/game-detail/youtube-test.dart';
 import 'package:http/http.dart' as http;
 
+import './metascore.dart';
+import '../../common/widgets/loading-anime.dart';
+import '../../common/widgets/play-time-board.dart';
+import '../../project-variables.dart';
+import './youtube-test.dart';
+import '../../common/functions/on-fav-icon-pressed.dart';
 import '../../model/youtube-video.dart';
-import '../game-card/helper-function.dart';
 import './helper-function.dart';
 
 class GameDetail extends StatefulWidget {

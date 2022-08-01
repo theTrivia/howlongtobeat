@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hltb/project-variables.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+import '../../project-variables.dart';
 
 class LoadingAnime extends StatelessWidget {
   const LoadingAnime({Key? key}) : super(key: key);

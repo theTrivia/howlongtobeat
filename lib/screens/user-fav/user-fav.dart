@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hltb/providers/user-favourite-game-provider.dart';
-import 'package:hltb/screens/user-fav/helper-function.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/search-game-provider.dart';
+import '../../providers/user-favourite-game-provider.dart';
 import '../game-card/game-card.dart';
 
 class UserFav extends StatelessWidget {

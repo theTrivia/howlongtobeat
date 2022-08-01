@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 // import 'package:hltb/api-static-creds.dart';
-import 'package:hltb/model/youtube-video.dart';
+
 import 'package:youtube_api/youtube_api.dart';
 
+import '../../model/youtube-video.dart';
 import '../../project-variables.dart';
 
 class YoutubeTest {

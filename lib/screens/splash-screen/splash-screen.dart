@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hltb/project-variables.dart';
 import 'package:provider/provider.dart';
 
+import '../../project-variables.dart';
 import '../../providers/user-favourite-game-provider.dart';
 
 class SplashScreen extends StatefulWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hltb/screens/game-detail/game-detail.dart';
-import 'package:hltb/project-variables.dart';
 
-import '../../common/play-time-board.dart';
-import './helper-function.dart';
+import '../../common/functions/on-fav-icon-pressed.dart';
+import '../../common/widgets/play-time-board.dart';
+import '../../project-variables.dart';
+import '../game-detail/game-detail.dart';
 
 class GameCard extends StatefulWidget {
   final String id;

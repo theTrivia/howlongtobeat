@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import '../../project-variables.dart';
 import 'package:http/http.dart' as http;
+
+import '../../project-variables.dart';
 
 String cleanGameNameForMetacritic(String gameName) {
   print(gameName);
@@ -10,7 +11,6 @@ String cleanGameNameForMetacritic(String gameName) {
       .replaceAll(': ', '-')
       .replaceAll('&', '')
       .replaceAll(' ', '-');
-  print(cleanedGameName);
   return cleanedGameName;
 }
 

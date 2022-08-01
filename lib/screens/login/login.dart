@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hltb/common/buttons/custom-raised-button.dart';
-import 'package:hltb/common/input-field.dart';
-import 'package:hltb/screens/login/perform-login.dart';
+import '../../common/widgets/input-field.dart';
+import './perform-login.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../providers/user-favourite-game-provider.dart';
