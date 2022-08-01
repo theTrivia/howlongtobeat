@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:hltb/common/loading-anime.dart';
 import 'package:hltb/common/play-time-board.dart';
 import 'package:hltb/project-variables.dart';
+import 'package:hltb/screens/game-detail/metascore.dart';
 import 'package:hltb/screens/game-detail/youtube-test.dart';
 import 'package:http/http.dart' as http;
 
 import '../../model/youtube-video.dart';
+import './helper-function.dart';
 
 class GameDetail extends StatefulWidget {
   final String gameId;
@@ -22,6 +24,9 @@ class _GameDetailState extends State<GameDetail> {
   var shouldWeLoad = true;
   var ytVideo = null;
   var _ytVideoReceived = false;
+  var _useMetacriticForGameDetails = true;
+  var _metacriticGameDetail = '';
+  var _metascore = '';
   getGameDetail(gameId) async {
     try {
       var result = await http
@@ -56,27 +61,68 @@ class _GameDetailState extends State<GameDetail> {
   @override
   void initState() {
     super.initState();
-    getGameDetail(widget.gameId).then((res) {
-      fetchYoutubeVideoLink(res['name']).then((res) {
-        var video = YoutubeVideo(
-          res.channelId,
-          res.channelTitle,
-          res.channelUrl,
-          res.description,
-          res.duration,
-          res.id,
-          res.kind,
-          res.publishedAt,
-          res.thumbnail,
-          res.title,
-          res.url,
-        );
+    getGameDetail(widget.gameId).then((res) async {
+      final videoGameName = res['name'];
 
-        setState(() {
-          ytVideo = video;
-          _ytVideoReceived = true;
-        });
+      //clean game name
+      final cleanedGameName = cleanGameNameForMetacritic(videoGameName);
+      final uniformPlatform = unifyPlatformForMetacritic(res['playableOn']);
+      if (uniformPlatform == '') {
+        _useMetacriticForGameDetails = false;
+      }
+      //fetch game detail from metacritic-game-detail-helper-function
+      // await http
+      //     .get(Uri.parse(ProjectVariables.METACRITIC_GAME_DETAIL_SERVER +
+      //         'gameDetail/' +
+      //         uniformPlatform +
+      //         '/' +
+      //         cleanedGameName))
+
+      await fetchGameDetailFromMetcriticBackendServer(
+              uniformPlatform, cleanedGameName)
+          .then((res) {
+        if (res == [] || jsonDecode(res.body)['game-detail'] == "Not Found") {
+          setState(() {
+            _useMetacriticForGameDetails = false;
+          });
+        } else {
+          setState(() {
+            _metacriticGameDetail = jsonDecode(res.body)['game-detail'];
+          });
+        }
+        print(res.body);
       });
+
+      await fetchMetascoreFromMetacriticBackendServer(
+              uniformPlatform, cleanedGameName)
+          .then((metascore) {
+        setState(() {
+          _metascore = metascore;
+        });
+        print(metascore);
+      });
+
+      //Logic for fetching yt video link
+      // fetchYoutubeVideoLink(res['name']).then((res) {
+      //   var video = YoutubeVideo(
+      //     res.channelId,
+      //     res.channelTitle,
+      //     res.channelUrl,
+      //     res.description,
+      //     res.duration,
+      //     res.id,
+      //     res.kind,
+      //     res.publishedAt,
+      //     res.thumbnail,
+      //     res.title,
+      //     res.url,
+      //   );
+
+      //   setState(() {
+      //     ytVideo = video;
+      //     _ytVideoReceived = true;
+      //   });
+      // });
 
       setState(() {
         gameDetail = res;
@@ -126,6 +172,32 @@ class _GameDetailState extends State<GameDetail> {
                           const SizedBox(
                             height: 20,
                           ),
+                          Row(
+                            children: [
+                              Expanded(
+                                // fit: FlexFit.loose,
+                                child: Metascore(ms: _metascore),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                width: 50,
+                                height: 50,
+                                color: ProjectVariables.MAIN_COLOR_DARK,
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.favorite,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           const Text(
                             'How long to beat?',
                             style: TextStyle(
@@ -153,11 +225,19 @@ class _GameDetailState extends State<GameDetail> {
                             ),
                           ),
                           Text(
-                            gameDetail['description'],
+                            (_useMetacriticForGameDetails == false)
+                                ? gameDetail['description']
+                                : _metacriticGameDetail,
                             style: TextStyle(
                               // color: Colors.white,
                               color: ProjectVariables.INPUT_TEXT_COLOR_2,
                             ),
+                          ),
+                          Text(
+                            (_useMetacriticForGameDetails == false)
+                                ? ''
+                                : 'Powered By Metacritic',
+                            style: TextStyle(fontSize: 12),
                           ),
                           const SizedBox(
                             height: 10,

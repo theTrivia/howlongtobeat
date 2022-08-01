@@ -19,4 +19,6 @@ class ProjectVariables {
   static Color HINT_TEXT_COLOR_2 = MAIN_COLOR;
   static Color BORDER_COLOR_2 = MAIN_COLOR;
   static Color FOCUSED_BORDER_COLOR_2 = MAIN_COLOR;
+
+  static String METACRITIC_GAME_DETAIL_SERVER = 'http://localhost:5000/';
 }
