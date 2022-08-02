@@ -31,6 +31,19 @@ class GameCard extends StatefulWidget {
 
 class _GameCardState extends State<GameCard> {
   var _isIconButtonClicked = false;
+  // 0 == !fav , 1 == fav
+  var _favIcon = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isGameAddedInFavList == true) {
+      _favIcon = 1;
+    } else {
+      _favIcon = 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,12 +118,31 @@ class _GameCardState extends State<GameCard> {
                     onPressed: () {
                       onFavIconPress(widget.id, context);
                       setState(() {
-                        _isIconButtonClicked = true;
+                        if (_favIcon == 0) {
+                          print(_favIcon);
+                          setState(() {
+                            _favIcon = 1;
+                          });
+                        } else if (_favIcon == 1) {
+                          print(_favIcon);
+                          setState(() {
+                            _favIcon = 0;
+                          });
+                        }
                       });
                     },
-                    icon: (widget.isGameAddedInFavList == true)
-                        ? Icon(FontAwesomeIcons.heartCrack)
-                        : Icon(FontAwesomeIcons.solidHeart),
+                    // icon: (widget.isGameAddedInFavList == true)
+                    //     ? Icon(FontAwesomeIcons.heartCrack)
+                    //     : Icon(FontAwesomeIcons.solidHeart),
+                    icon: (_favIcon == 0)
+                        ? Icon(
+                            FontAwesomeIcons.solidHeart,
+                            color: Colors.white,
+                          )
+                        : Icon(
+                            FontAwesomeIcons.heartCrack,
+                            color: Colors.white,
+                          ),
                     color: Colors.white,
                     iconSize: 25,
                   ),
