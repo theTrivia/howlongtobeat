@@ -36,7 +36,7 @@ flutter_*.png
 linked_*.ds
 unlinked.ds
 unlinked_spec.ds
-**/api-static-creds.dart
+**/private-creds.dart
 
 # Web related
 

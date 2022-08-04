@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hltb/screens/game-detail/game-detail.dart';
-import 'package:hltb/project-variables.dart';
+import 'package:provider/provider.dart';
 
-import '../../common/play-time-board.dart';
-import './helper-function.dart';
+import '../../common/functions/on-fav-icon-pressed.dart';
+import '../../common/widgets/play-time-board.dart';
+import '../../project-variables.dart';
+import '../../providers/user-favourite-game-provider.dart';
+import '../game-detail/game-detail.dart';
 
 class GameCard extends StatefulWidget {
   final String id;
@@ -31,6 +33,25 @@ class GameCard extends StatefulWidget {
 
 class _GameCardState extends State<GameCard> {
   var _isIconButtonClicked = false;
+  // 0 == !fav , 1 == fav
+  var _favIcon = 0;
+
+  doAsyncJob() async {
+    await Provider.of<UserFavouriteGameProvider>(context, listen: false)
+        .fetchFavouriteGameDetails();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    doAsyncJob();
+    if (widget.isGameAddedInFavList == true) {
+      _favIcon = 1;
+    } else {
+      _favIcon = 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +60,8 @@ class _GameCardState extends State<GameCard> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => GameDetail(widget.id),
+            builder: (context) =>
+                GameDetail(widget.id, widget.isGameAddedInFavList),
           ),
         );
       },
@@ -49,7 +71,7 @@ class _GameCardState extends State<GameCard> {
           clipBehavior: Clip.antiAlias,
           borderRadius: BorderRadius.circular(20.0),
           child: Container(
-            color: ProjectVariables.BACKGROUND_COLOR,
+            color: ProjectVariables.SEXY_WHITE_LOW,
             child: Row(
               children: [
                 Container(
@@ -81,7 +103,7 @@ class _GameCardState extends State<GameCard> {
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                // color: Colors.white,
                               ),
                             ),
                           ),
@@ -89,6 +111,8 @@ class _GameCardState extends State<GameCard> {
                             gameplayMain: widget.gameplayMain,
                             gameplayMainExtra: widget.gameplayMainExtra,
                             gameplayCompletionist: widget.gameplayCompletionist,
+                            cardHeight: 17,
+                            circularBorderRadius: 5,
                           ),
                         ],
                       ),
@@ -104,12 +128,31 @@ class _GameCardState extends State<GameCard> {
                     onPressed: () {
                       onFavIconPress(widget.id, context);
                       setState(() {
-                        _isIconButtonClicked = true;
+                        if (_favIcon == 0) {
+                          print(_favIcon);
+                          setState(() {
+                            _favIcon = 1;
+                          });
+                        } else if (_favIcon == 1) {
+                          print(_favIcon);
+                          setState(() {
+                            _favIcon = 0;
+                          });
+                        }
                       });
                     },
-                    icon: (widget.isGameAddedInFavList == true)
-                        ? Icon(FontAwesomeIcons.heartCrack)
-                        : Icon(FontAwesomeIcons.solidHeart),
+                    // icon: (widget.isGameAddedInFavList == true)
+                    //     ? Icon(FontAwesomeIcons.heartCrack)
+                    //     : Icon(FontAwesomeIcons.solidHeart),
+                    icon: (_favIcon == 0)
+                        ? Icon(
+                            FontAwesomeIcons.solidHeart,
+                            color: Colors.white,
+                          )
+                        : Icon(
+                            FontAwesomeIcons.heartCrack,
+                            color: Colors.white,
+                          ),
                     color: Colors.white,
                     iconSize: 25,
                   ),

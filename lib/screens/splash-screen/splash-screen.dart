@@ -1,11 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hltb/project-variables.dart';
+import 'package:hltb/providers/popular-games-provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../project-variables.dart';
 import '../../providers/user-favourite-game-provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,7 +19,15 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
   doAsyncJob(context) async {
     await Provider.of<UserFavouriteGameProvider>(context, listen: false)
         .fetchFavouriteGameDetails();
+
+    await Provider.of<PopularGamesProvider>(context, listen: false)
+        .getPopularGames();
   }
+
+  // fetchPopularGames() async {
+  //   await Provider.of<PopularGamesProvider>(context, listen: false)
+  //       .getPopularGames();
+  // }
 
   @override
   void initState() {
@@ -32,7 +39,7 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
           _userShouldLoginOrSignup = true;
         });
       } else {
-        doAsyncJob(context).then((_) {
+        doAsyncJob(context).then((_) async {
           Navigator.pushNamed(context, '/mainPage');
         });
       }
@@ -53,19 +60,19 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
+              Text(
                 'howlongtobeat',
                 style: TextStyle(
                   fontSize: 40,
-                  color: Colors.white,
+                  color: ProjectVariables.SEXY_WHITE,
                   fontWeight: FontWeight.w900,
                 ),
               ),
-              const Text(
+              Text(
                 'Made For GAMERS',
                 style: TextStyle(
                   fontSize: 15,
-                  color: Colors.white,
+                  color: ProjectVariables.SEXY_WHITE,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -77,7 +84,7 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
                           height: 100,
                         ),
                         ButtonTheme(
-                          buttonColor: Colors.white,
+                          buttonColor: ProjectVariables.SEXY_WHITE,
                           minWidth: MediaQuery.of(context).size.width * 0.3,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
@@ -99,7 +106,7 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
                           width: 10,
                         ),
                         ButtonTheme(
-                          buttonColor: Colors.white,
+                          buttonColor: ProjectVariables.SEXY_WHITE,
                           minWidth: MediaQuery.of(context).size.width * 0.3,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),

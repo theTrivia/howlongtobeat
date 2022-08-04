@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hltb/project-variables.dart';
 
 class InputField extends StatelessWidget {
   final String hintText;

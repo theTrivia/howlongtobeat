@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../private-creds.dart';
 import '../model/game.dart';
 
 class UserFavouriteGameProvider extends ChangeNotifier {
@@ -52,7 +53,7 @@ class UserFavouriteGameProvider extends ChangeNotifier {
     for (var i = 0; i < gameIds.length; i++) {
       try {
         var result = await http.get(
-          Uri.parse('http://192.168.0.182:3000/gameDetail/' + gameIds[i]),
+          Uri.parse(PrivateCreds.HELPER_SERVER + 'gameDetail/' + gameIds[i]),
         );
         // print(result.body);
         var formattedResult = jsonDecode(result.body)['result'];

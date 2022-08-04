@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hltb/providers/search-game-provider.dart';
-import 'package:hltb/providers/user-favourite-game-provider.dart';
-import 'package:hltb/screens/game-card/game-card.dart';
+
 import 'package:provider/provider.dart';
+
+import '../../providers/search-game-provider.dart';
+import '../../providers/user-favourite-game-provider.dart';
+import '../game-card/game-card.dart';
 
 class GamesList extends StatelessWidget {
   var searchResult = [];

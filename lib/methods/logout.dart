@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hltb/providers/user-favourite-game-provider.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/search-game-provider.dart';
+import '../providers/user-favourite-game-provider.dart';
 
 class Logout {
   static final secureStorage = const FlutterSecureStorage();
