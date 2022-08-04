@@ -19,12 +19,6 @@ class UserFav extends StatelessWidget {
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
-            // color: Colors.black.withOpacity(100),
-            // image: DecorationImage(
-            //   image: NetworkImage(
-            //       'https://s3.envato.com/files/16cdea6b-a392-482a-905c-541e480bc1ce/inline_image_preview.jpg'),
-            //   fit: BoxFit.fill,
-            // ),
             gradient: ProjectVariables.BACKGROUND_GRADIENT,
           ),
           child: SafeArea(

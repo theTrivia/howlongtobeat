@@ -7,7 +7,6 @@ import '../../providers/user-favourite-game-provider.dart';
 import '../game-detail/game-detail.dart';
 
 class PopularGameWidget extends StatelessWidget {
-  // const PopularGameWidget({Key? key}) : super(key: key);
   final int index;
   PopularGameWidget(this.index);
 

@@ -18,14 +18,6 @@ class PerformSingup {
       final signupCreds = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      // var db = FirebaseFirestore.instance;
-      // final credential =
-      //     await db.collection("users").doc(loginCred.user!.uid).get();
-
-      // return {
-      //   'loginStatus': 'login-success',
-      //   'userCredential': credential.data()
-      // };
       return signupCreds;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

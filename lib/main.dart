@@ -45,50 +45,21 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         initialRoute: '/splashScreen',
         routes: {
-          // "/": (context) => LandingPage(),
           "/splashScreen": (context) => SplashScreen(),
           "/mainPage": (context) => MainPage(),
           "/login": (context) => Login(),
           "/signup": (context) => Signup(),
           "/appMainPage": (context) => SearchPage(),
           "/userFav": (context) => UserFav(),
-
-          // "/addPassword": (context) => AddPasswd(),
-          // "/settings": (context) => AppSettings(),
-          // "/aboutUs": (context) => AboutUs(),
-          // "/editMasterPassword": (context) => EditMasterPassword(),
         },
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         home: Scaffold(
-          // backgroundColor: Colors.black,
           body: MainPage(),
         ));
   }
 }
-
-// class BottomNavigationBarImpl extends StatelessWidget {
-//   const BottomNavigationBarImpl({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: BottomNavigationBar(
-//         items: const [
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.search),
-//             label: 'Search',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.favorite),
-//             label: 'Favourites',
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class MainMaterialApp extends StatelessWidget {
   const MainMaterialApp({Key? key}) : super(key: key);

@@ -21,14 +21,6 @@ class _MainPageState extends State<MainPage> {
     UserFav(),
   ];
 
-  //fetching user favourite games... [Needs to be refactored]
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Provider.of<UserFavouriteGameProvider>(context, listen: false)
-  //       .fetchFavouriteGameDetails();
-  // }
-
   void _onItemTapped(index) {
     setState(() {
       _selectedindex = index;
@@ -41,7 +33,7 @@ class _MainPageState extends State<MainPage> {
       body: _widgetOptions.elementAt(_selectedindex),
       extendBody: true,
       bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(25),
           topRight: Radius.circular(25),
         ),
