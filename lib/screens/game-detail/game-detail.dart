@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hltb/private-creds.dart';
 import 'package:http/http.dart' as http;
 
 import './metascore.dart';
@@ -40,7 +41,7 @@ class _GameDetailState extends State<GameDetail> {
   getGameDetail(gameId) async {
     try {
       var result = await http
-          .get(Uri.parse('http://192.168.0.182:3000/gameDetail/' + gameId));
+          .get(Uri.parse(PrivateCreds.HLTB_SERVER + 'gameDetail/' + gameId));
       // print(result.body);
       var formattedResult = jsonDecode(result.body)['result'];
       return formattedResult;
@@ -76,8 +77,9 @@ class _GameDetailState extends State<GameDetail> {
     } else {
       _favIcon = 0;
     }
-    print(_favIcon);
+    // print(_favIcon);
     getGameDetail(widget.gameId).then((res) async {
+      // print(res);
       final videoGameName = res['name'];
 
       //clean game name
@@ -97,16 +99,24 @@ class _GameDetailState extends State<GameDetail> {
       await fetchGameDetailFromMetcriticBackendServer(
               uniformPlatform, cleanedGameName)
           .then((res) {
-        if (res == [] || jsonDecode(res.body)['game-detail'] == "Not Found") {
+        try {
+          print(res);
+          if (res == [] || jsonDecode(res.body)['game-detail'] == "Not Found") {
+            setState(() {
+              _useMetacriticForGameDetails = false;
+            });
+          } else {
+            setState(() {
+              _metacriticGameDetail = jsonDecode(res.body)['game-detail'];
+            });
+          }
+        } catch (e) {
           setState(() {
             _useMetacriticForGameDetails = false;
           });
-        } else {
-          setState(() {
-            _metacriticGameDetail = jsonDecode(res.body)['game-detail'];
-          });
         }
-        print(res.body);
+
+        // print(res.body);
       });
 
       await fetchMetascoreFromMetacriticBackendServer(
@@ -115,7 +125,7 @@ class _GameDetailState extends State<GameDetail> {
         setState(() {
           _metascore = metascore;
         });
-        print(metascore);
+        // print(metascore);
       });
 
       //Logic for fetching yt video link
@@ -144,6 +154,7 @@ class _GameDetailState extends State<GameDetail> {
         gameDetail = res;
         shouldWeLoad = false;
       });
+      print(gameDetail['name']);
     });
   }
 
@@ -186,11 +197,12 @@ class _GameDetailState extends State<GameDetail> {
                           FittedBox(
                             child: Text(
                               gameDetail['name'],
+                              // 'sss',
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 25,
                                 // color: Color.fromARGB(255, 72, 0, 255),
-                                color: Colors.white,
+                                color: ProjectVariables.SEXY_WHITE,
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
@@ -203,9 +215,12 @@ class _GameDetailState extends State<GameDetail> {
                               children: [
                                 Column(
                                   children: [
-                                    Image.network(
-                                      'https://howlongtobeat.com' +
-                                          gameDetail['imageUrl'],
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.network(
+                                        'https://howlongtobeat.com' +
+                                            gameDetail['imageUrl'],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -249,11 +264,13 @@ class _GameDetailState extends State<GameDetail> {
                                         icon: (_favIcon == 0)
                                             ? Icon(
                                                 FontAwesomeIcons.solidHeart,
-                                                color: Colors.white,
+                                                color:
+                                                    ProjectVariables.SEXY_WHITE,
                                               )
                                             : Icon(
                                                 FontAwesomeIcons.heartCrack,
-                                                color: Colors.white,
+                                                color:
+                                                    ProjectVariables.SEXY_WHITE,
                                               ),
                                       ),
                                     ),
@@ -262,11 +279,11 @@ class _GameDetailState extends State<GameDetail> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Text(
+                                Text(
                                   'How long to beat?',
                                   style: TextStyle(
                                     // color: Color.fromARGB(255, 72, 0, 255),
-                                    color: Colors.white,
+                                    color: ProjectVariables.SEXY_WHITE,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -280,15 +297,17 @@ class _GameDetailState extends State<GameDetail> {
                                   gameplayCompletionist:
                                       gameDetail['gameplayCompletionist']
                                           .toString(),
+                                  cardHeight: 25,
+                                  circularBorderRadius: 10,
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Text(
+                                Text(
                                   'Description',
                                   style: TextStyle(
                                     // color: Color.fromARGB(255, 72, 0, 255),
-                                    color: Colors.white,
+                                    color: ProjectVariables.SEXY_WHITE,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -300,7 +319,7 @@ class _GameDetailState extends State<GameDetail> {
                                   style: TextStyle(
                                     // color: Colors.white,
                                     // color: ProjectVariables.INPUT_TEXT_COLOR_2,
-                                    color: Colors.white,
+                                    color: ProjectVariables.SEXY_WHITE,
                                   ),
                                 ),
                                 Text(
@@ -315,11 +334,11 @@ class _GameDetailState extends State<GameDetail> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Text(
+                                Text(
                                   'Playable On',
                                   style: TextStyle(
                                     // color: Color.fromARGB(255, 72, 0, 255),
-                                    color: Colors.white,
+                                    color: ProjectVariables.SEXY_WHITE,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -337,7 +356,7 @@ class _GameDetailState extends State<GameDetail> {
                                           )
                                       : 'Not Available',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: ProjectVariables.SEXY_WHITE,
                                     // color: ProjectVariables.INPUT_TEXT_COLOR_2,
                                   ),
                                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../common/widgets/input-field.dart';
+import '../../providers/popular-games-provider.dart';
 import './perform-login.dart';
 
 import 'package:provider/provider.dart';
@@ -49,11 +50,11 @@ class Login extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
+              Text(
                 'login',
                 style: TextStyle(
                   fontSize: 35,
-                  color: Colors.white,
+                  color: ProjectVariables.SEXY_WHITE,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -66,10 +67,10 @@ class Login extends StatelessWidget {
               InputField(
                 hintText: 'Email',
                 textEditingController: emailTextController,
-                borderColor: ProjectVariables.BORDER_COLOR_1,
-                focusedBorderColor: ProjectVariables.FOCUSED_BORDER_COLOR_1,
-                hintTextColor: ProjectVariables.HINT_TEXT_COLOR_1,
-                inputTextColor: ProjectVariables.INPUT_TEXT_COLOR_1,
+                borderColor: ProjectVariables.SEXY_WHITE,
+                focusedBorderColor: ProjectVariables.SEXY_WHITE,
+                hintTextColor: ProjectVariables.SEXY_WHITE,
+                inputTextColor: ProjectVariables.SEXY_WHITE,
               ),
               const SizedBox(
                 height: 10,
@@ -77,16 +78,16 @@ class Login extends StatelessWidget {
               InputField(
                 hintText: 'Password',
                 textEditingController: passwordTextController,
-                borderColor: ProjectVariables.BORDER_COLOR_1,
-                focusedBorderColor: ProjectVariables.FOCUSED_BORDER_COLOR_1,
-                hintTextColor: ProjectVariables.HINT_TEXT_COLOR_1,
-                inputTextColor: ProjectVariables.INPUT_TEXT_COLOR_1,
+                borderColor: ProjectVariables.SEXY_WHITE,
+                focusedBorderColor: ProjectVariables.SEXY_WHITE,
+                hintTextColor: ProjectVariables.SEXY_WHITE,
+                inputTextColor: ProjectVariables.SEXY_WHITE,
               ),
               const SizedBox(
                 height: 10,
               ),
               ButtonTheme(
-                buttonColor: Colors.white,
+                buttonColor: ProjectVariables.SEXY_WHITE,
                 minWidth: MediaQuery.of(context).size.width * 0.3,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
@@ -112,13 +113,17 @@ class Login extends StatelessWidget {
                               listen: false)
                           .fetchFavouriteGameDetails();
 
+                      await Provider.of<PopularGamesProvider>(context,
+                              listen: false)
+                          .getPopularGames();
+
                       Navigator.pushNamed(context, '/mainPage');
                     }
                   },
                   child: Text(
                     'Login',
                     style: TextStyle(
-                      color: ProjectVariables.INPUT_TEXT_COLOR_2,
+                      color: ProjectVariables.MAIN_COLOR,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

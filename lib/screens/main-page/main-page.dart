@@ -46,8 +46,8 @@ class _MainPageState extends State<MainPage> {
           topRight: Radius.circular(25),
         ),
         child: BottomNavigationBar(
-          backgroundColor: ProjectVariables.MAIN_COLOR,
-          selectedItemColor: Colors.white,
+          backgroundColor: ProjectVariables.SEXY_WHITE,
+          selectedItemColor: ProjectVariables.MAIN_COLOR,
           // fixedColor: Colo,
           items: const [
             BottomNavigationBarItem(

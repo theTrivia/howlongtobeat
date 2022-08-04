@@ -20,6 +20,19 @@ class ProjectVariables {
   static Color BORDER_COLOR_2 = MAIN_COLOR;
   static Color FOCUSED_BORDER_COLOR_2 = MAIN_COLOR;
 
-  // static String METACRITIC_GAME_DETAIL_SERVER = 'http://localhost:5000/';
-  static String METACRITIC_GAME_DETAIL_SERVER = 'http://192.168.0.182:5000/';
+  static LinearGradient BACKGROUND_GRADIENT = LinearGradient(
+    begin: Alignment.topRight,
+    end: Alignment.bottomLeft,
+    stops: const [
+      0.5,
+      0.8,
+    ],
+    colors: [
+      Color.fromARGB(247, 2, 4, 29),
+      Colors.black,
+    ],
+  );
+
+  static Color SEXY_WHITE = Color.fromARGB(247, 232, 232, 232);
+  static Color SEXY_WHITE_LOW = Color.fromARGB(158, 232, 232, 232);
 }

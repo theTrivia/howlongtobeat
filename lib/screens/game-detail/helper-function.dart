@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:hltb/private-creds.dart';
 import 'package:http/http.dart' as http;
 
 import '../../project-variables.dart';
 
 String cleanGameNameForMetacritic(String gameName) {
-  print(gameName);
+  // print(gameName);
   final cleanedGameName = gameName
       .toLowerCase()
       .replaceAll(': ', '-')
@@ -21,7 +22,7 @@ String cleanGameNameForMetacritic(String gameName) {
 //     'Xbox Series X/S'
 
 String unifyPlatformForMetacritic(platforms) {
-  print(platforms);
+  // print(platforms);
 
   if (platforms.contains('PC')) {
     return 'pc';
@@ -48,7 +49,7 @@ String unifyPlatformForMetacritic(platforms) {
 fetchGameDetailFromMetcriticBackendServer(
     uniformPlatform, cleanedGameName) async {
   var res = await http.get(Uri.parse(
-      ProjectVariables.METACRITIC_GAME_DETAIL_SERVER +
+      PrivateCreds.METACRITIC_GAME_DETAIL_SERVER +
           'gameDetail/' +
           uniformPlatform +
           '/' +
@@ -62,7 +63,7 @@ fetchMetascoreFromMetacriticBackendServer(
     uniformPlatform, cleanedGameName) async {
   try {
     var res = await http.get(Uri.parse(
-        ProjectVariables.METACRITIC_GAME_DETAIL_SERVER +
+        PrivateCreds.METACRITIC_GAME_DETAIL_SERVER +
             'metascore/' +
             uniformPlatform +
             '/' +

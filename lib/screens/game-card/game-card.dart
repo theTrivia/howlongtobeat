@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../../common/functions/on-fav-icon-pressed.dart';
 import '../../common/widgets/play-time-board.dart';
 import '../../project-variables.dart';
+import '../../providers/user-favourite-game-provider.dart';
 import '../game-detail/game-detail.dart';
 
 class GameCard extends StatefulWidget {
@@ -34,10 +36,16 @@ class _GameCardState extends State<GameCard> {
   // 0 == !fav , 1 == fav
   var _favIcon = 0;
 
+  doAsyncJob() async {
+    await Provider.of<UserFavouriteGameProvider>(context, listen: false)
+        .fetchFavouriteGameDetails();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    doAsyncJob();
     if (widget.isGameAddedInFavList == true) {
       _favIcon = 1;
     } else {
@@ -63,7 +71,7 @@ class _GameCardState extends State<GameCard> {
           clipBehavior: Clip.antiAlias,
           borderRadius: BorderRadius.circular(20.0),
           child: Container(
-            color: ProjectVariables.BACKGROUND_COLOR,
+            color: ProjectVariables.SEXY_WHITE_LOW,
             child: Row(
               children: [
                 Container(
@@ -95,7 +103,7 @@ class _GameCardState extends State<GameCard> {
                               style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                // color: Colors.white,
                               ),
                             ),
                           ),
@@ -103,6 +111,8 @@ class _GameCardState extends State<GameCard> {
                             gameplayMain: widget.gameplayMain,
                             gameplayMainExtra: widget.gameplayMainExtra,
                             gameplayCompletionist: widget.gameplayCompletionist,
+                            cardHeight: 17,
+                            circularBorderRadius: 5,
                           ),
                         ],
                       ),
