@@ -4,7 +4,7 @@ Mobile client for https://howlongtobeat.com/
 
 Some Preview:
 
-![Simulator Screen Shot - iPhone 12 - 2022-08-04 at 23 08 24](https://user-images.githubusercontent.com/36889758/182915246-0e2019cc-2bc6-497c-825a-4fa2b1fdd18b.png)
+![Simulator Screen Shot - iPhone 12 - 2022-08-04 at 23 08 24](https://user-images.githubusercontent.com/36889758/182915246-0e2019cc-2bc6-497c-825a-4fa2b1fdd18b.png | width=100)
 
 
 ![Simulator Screen Shot - iPhone 12 - 2022-08-04 at 23 07 14](https://user-images.githubusercontent.com/36889758/182915051-2cda176b-b875-400b-8813-68a7cb8b8468.png)
