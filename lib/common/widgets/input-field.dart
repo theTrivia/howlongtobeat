@@ -7,6 +7,7 @@ class InputField extends StatelessWidget {
   final Color borderColor;
   final Color inputTextColor;
   final Color focusedBorderColor;
+  final bool obscureText;
 
   const InputField({
     Key? key,
@@ -16,11 +17,13 @@ class InputField extends StatelessWidget {
     required this.borderColor,
     required this.inputTextColor,
     required this.focusedBorderColor,
+    required this.obscureText,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText,
       controller: textEditingController,
       style: TextStyle(
         color: inputTextColor,

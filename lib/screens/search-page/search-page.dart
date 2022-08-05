@@ -92,6 +92,7 @@ class _SearchPageState extends State<SearchPage> {
                         focusedBorderColor: ProjectVariables.SEXY_WHITE,
                         hintTextColor: ProjectVariables.SEXY_WHITE,
                         inputTextColor: ProjectVariables.SEXY_WHITE,
+                        obscureText: false,
                       ),
                       IconButton(
                         onPressed: () async {
@@ -164,7 +165,7 @@ class _SearchPageState extends State<SearchPage> {
                     ? Container(
                         height: MediaQuery.of(context).size.height * 0.7,
                         // color: Colors.red,
-                        child: const LoadingAnime(),
+                        child: LoadingAnime(ProjectVariables.MAIN_COLOR),
                       )
                     : GamesList(),
               ],

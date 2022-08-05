@@ -191,7 +191,7 @@ class _GameDetailState extends State<GameDetail> {
                   right: 10,
                 ),
                 child: (gameDetail == null)
-                    ? const LoadingAnime()
+                    ? LoadingAnime(ProjectVariables.MAIN_COLOR)
                     : Column(
                         children: [
                           FittedBox(

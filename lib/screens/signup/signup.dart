@@ -40,6 +40,7 @@ class Signup extends StatelessWidget {
               focusedBorderColor: ProjectVariables.SEXY_WHITE,
               hintTextColor: ProjectVariables.SEXY_WHITE,
               inputTextColor: ProjectVariables.SEXY_WHITE,
+              obscureText: false,
             ),
             const SizedBox(
               height: 10,
@@ -51,6 +52,7 @@ class Signup extends StatelessWidget {
               focusedBorderColor: ProjectVariables.SEXY_WHITE,
               hintTextColor: ProjectVariables.SEXY_WHITE,
               inputTextColor: ProjectVariables.SEXY_WHITE,
+              obscureText: true,
             ),
             const SizedBox(
               height: 10,
