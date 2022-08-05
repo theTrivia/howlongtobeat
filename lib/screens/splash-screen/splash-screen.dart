@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hltb/providers/popular-games-provider.dart';
 import 'package:provider/provider.dart';
 
@@ -62,18 +63,18 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
             children: [
               Text(
                 'howlongtobeat',
-                style: TextStyle(
-                  fontSize: 40,
+                style: GoogleFonts.staatliches(
                   color: ProjectVariables.SEXY_WHITE,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 55,
                 ),
               ),
               Text(
                 'Made For GAMERS',
-                style: TextStyle(
-                  fontSize: 15,
+                style: GoogleFonts.staatliches(
                   color: ProjectVariables.SEXY_WHITE,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
                 ),
               ),
               (_userShouldLoginOrSignup)
@@ -95,9 +96,10 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
                             },
                             child: Text(
                               'Login',
-                              style: TextStyle(
+                              style: GoogleFonts.staatliches(
+                                color: ProjectVariables.MAIN_COLOR,
                                 fontWeight: FontWeight.bold,
-                                color: ProjectVariables.INPUT_TEXT_COLOR_2,
+                                fontSize: 25,
                               ),
                             ),
                           ),
@@ -117,9 +119,10 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
                             },
                             child: Text(
                               'Signup',
-                              style: TextStyle(
+                              style: GoogleFonts.staatliches(
+                                color: ProjectVariables.MAIN_COLOR,
                                 fontWeight: FontWeight.bold,
-                                color: ProjectVariables.INPUT_TEXT_COLOR_2,
+                                fontSize: 25,
                               ),
                             ),
                           ),

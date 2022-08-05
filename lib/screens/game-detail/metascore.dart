@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../project-variables.dart';
 
@@ -15,19 +16,20 @@ class Metascore extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             'Metacritic Score',
-            style: TextStyle(
-              color: Colors.white,
+            style: GoogleFonts.staatliches(
+              color: ProjectVariables.SEXY_WHITE,
               fontWeight: FontWeight.bold,
+              fontSize: 17,
             ),
           ),
           Text(
             ms,
-            style: const TextStyle(
-              color: Color.fromARGB(255, 255, 179, 0),
+            style: GoogleFonts.staatliches(
+              color: Colors.amber,
               fontWeight: FontWeight.bold,
-              fontSize: 25,
+              fontSize: 20,
             ),
           ),
         ],

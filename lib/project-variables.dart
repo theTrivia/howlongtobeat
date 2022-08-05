@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProjectVariables {
   //color palette
@@ -35,4 +36,10 @@ class ProjectVariables {
 
   static Color SEXY_WHITE = Color.fromARGB(247, 232, 232, 232);
   static Color SEXY_WHITE_LOW = Color.fromARGB(158, 232, 232, 232);
+
+  static TextStyle MAIN_FONT = GoogleFonts.staatliches(
+    color: ProjectVariables.MAIN_COLOR,
+    fontWeight: FontWeight.bold,
+    fontSize: 35,
+  );
 }

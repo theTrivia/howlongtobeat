@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hltb/common/widgets/loading-anime.dart';
 import '../../common/widgets/input-field.dart';
 import '../../providers/popular-games-provider.dart';
@@ -63,10 +64,10 @@ class _LoginState extends State<Login> {
                     LoadingAnime(ProjectVariables.SEXY_WHITE),
                     Text(
                       'Logging you in...',
-                      style: TextStyle(
+                      style: GoogleFonts.staatliches(
                         color: ProjectVariables.SEXY_WHITE,
-                        fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        fontSize: 25,
                       ),
                     )
                   ],
@@ -76,10 +77,10 @@ class _LoginState extends State<Login> {
                   children: [
                     Text(
                       'login',
-                      style: TextStyle(
-                        fontSize: 35,
+                      style: GoogleFonts.staatliches(
                         color: ProjectVariables.SEXY_WHITE,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 45,
                       ),
                     ),
                     const SizedBox(
@@ -160,9 +161,10 @@ class _LoginState extends State<Login> {
                         },
                         child: Text(
                           'Login',
-                          style: TextStyle(
+                          style: GoogleFonts.staatliches(
                             color: ProjectVariables.MAIN_COLOR,
                             fontWeight: FontWeight.bold,
+                            fontSize: 25,
                           ),
                         ),
                       ),

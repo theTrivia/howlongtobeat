@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/popular-games-provider.dart';
@@ -24,10 +25,10 @@ class Signup extends StatelessWidget {
           children: [
             Text(
               'signup',
-              style: TextStyle(
-                fontSize: 35,
+              style: GoogleFonts.staatliches(
                 color: ProjectVariables.SEXY_WHITE,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.bold,
+                fontSize: 45,
               ),
             ),
             const SizedBox(
@@ -78,9 +79,10 @@ class Signup extends StatelessWidget {
                 },
                 child: Text(
                   'Sign up',
-                  style: TextStyle(
+                  style: GoogleFonts.staatliches(
                     color: ProjectVariables.MAIN_COLOR,
                     fontWeight: FontWeight.bold,
+                    fontSize: 25,
                   ),
                 ),
               ),

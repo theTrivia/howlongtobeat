@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:provider/provider.dart';
 
@@ -43,11 +44,11 @@ class _MainPageState extends State<MainPage> {
           // fixedColor: Colo,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
+              icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
+              icon: FaIcon(FontAwesomeIcons.solidHeart),
               label: 'Favourites',
             )
           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/functions/on-fav-icon-pressed.dart';
@@ -100,10 +101,10 @@ class _GameCardState extends State<GameCard> {
                               (widget.name.length > 18)
                                   ? '${widget.name.substring(0, 18)}...'
                                   : widget.name,
-                              style: const TextStyle(
-                                fontSize: 18,
+                              style: GoogleFonts.staatliches(
+                                color: ProjectVariables.MAIN_COLOR_DARK,
                                 fontWeight: FontWeight.bold,
-                                // color: Colors.white,
+                                fontSize: 23,
                               ),
                             ),
                           ),

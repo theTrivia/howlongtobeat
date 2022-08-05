@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PlayTimeBoard extends StatelessWidget {
   final String gameplayMain;
@@ -28,14 +29,16 @@ class PlayTimeBoard extends StatelessWidget {
             color: Colors.blue,
             child: Row(
               children: [
-                const Flexible(
+                Flexible(
                   child: FractionallySizedBox(
                     widthFactor: 1,
                     child: Text(
                       'Main Story',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.staatliches(
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
+                        fontSize: 15,
                       ),
                     ),
                   ),
@@ -46,6 +49,11 @@ class PlayTimeBoard extends StatelessWidget {
                     child: Text(
                       gameplayMain + ' hours',
                       textAlign: TextAlign.center,
+                      style: GoogleFonts.staatliches(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ),
@@ -57,14 +65,16 @@ class PlayTimeBoard extends StatelessWidget {
             color: Colors.purple,
             child: Row(
               children: [
-                const Flexible(
+                Flexible(
                   child: FractionallySizedBox(
                     widthFactor: 1,
                     child: Text(
                       'Main + Extra',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.staatliches(
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
+                        fontSize: 15,
                       ),
                     ),
                   ),
@@ -75,6 +85,11 @@ class PlayTimeBoard extends StatelessWidget {
                     child: Text(
                       gameplayMainExtra + ' hours',
                       textAlign: TextAlign.center,
+                      style: GoogleFonts.staatliches(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ),
@@ -86,14 +101,16 @@ class PlayTimeBoard extends StatelessWidget {
             color: Colors.red,
             child: Row(
               children: [
-                const Flexible(
+                Flexible(
                   child: FractionallySizedBox(
                     widthFactor: 1,
                     child: Text(
                       'Completionist',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.staatliches(
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
+                        fontSize: 15,
                       ),
                     ),
                   ),
@@ -104,6 +121,11 @@ class PlayTimeBoard extends StatelessWidget {
                     child: Text(
                       gameplayCompletionist + ' hours',
                       textAlign: TextAlign.center,
+                      style: GoogleFonts.staatliches(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class InputField extends StatelessWidget {
   final String hintText;
@@ -25,9 +26,17 @@ class InputField extends StatelessWidget {
     return TextFormField(
       obscureText: obscureText,
       controller: textEditingController,
-      style: TextStyle(
+      // style: TextStyle(
+      //   color: inputTextColor,
+      //   fontWeight: FontWeight.bold,
+      // ),style:
+      // fontSize: 25,
+      // color: Color.fromARGB(255, 72, 0, 255),
+      // fontWeight: FontWeight.w900,
+      style: GoogleFonts.staatliches(
         color: inputTextColor,
         fontWeight: FontWeight.bold,
+        fontSize: 25,
       ),
       decoration: InputDecoration(
         hintStyle: TextStyle(

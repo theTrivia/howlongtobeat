@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +11,7 @@ var db = FirebaseFirestore.instance;
 
 onFavIconPress(gameId, context) async {
   // print(gameId);
+  HapticFeedback.lightImpact();
   await checkAndSaveGameIfUserLikesTheGame(gameId, context);
 }
 

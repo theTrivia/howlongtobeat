@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hltb/screens/popular-games/popular-games.dart';
 
 import 'package:http/http.dart' as http;
@@ -53,12 +54,16 @@ class _SearchPageState extends State<SearchPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'howlongtobeat',
-                        style: TextStyle(
-                          fontSize: 25,
-                          color: Color.fromARGB(255, 72, 0, 255),
-                          fontWeight: FontWeight.w900,
+                        // style:
+                        // fontSize: 25,
+                        // color: Color.fromARGB(255, 72, 0, 255),
+                        // fontWeight: FontWeight.w900,
+                        style: GoogleFonts.staatliches(
+                          color: ProjectVariables.MAIN_COLOR,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 35,
                         ),
                       ),
                       IconButton(
@@ -83,7 +88,7 @@ class _SearchPageState extends State<SearchPage> {
                     right: 8,
                   ),
                   child: Stack(
-                    alignment: AlignmentDirectional.bottomEnd,
+                    alignment: AlignmentDirectional.centerEnd,
                     children: [
                       InputField(
                         hintText: 'Search...',
@@ -131,10 +136,10 @@ class _SearchPageState extends State<SearchPage> {
                         children: [
                           Text(
                             'Popular Games',
-                            style: TextStyle(
-                              fontSize: 16,
+                            style: GoogleFonts.staatliches(
                               color: ProjectVariables.SEXY_WHITE,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
                             ),
                           ),
                           const SizedBox(
@@ -155,9 +160,15 @@ class _SearchPageState extends State<SearchPage> {
                 (_fetchingResultFinished == true)
                     ? Text(
                         'Search Result for \'${_searchResultTerm}\'',
-                        style: TextStyle(
-                          color: ProjectVariables.SEXY_WHITE,
-                          fontWeight: FontWeight.w900,
+                        // style: TextStyle(
+                        //   color: ProjectVariables.SEXY_WHITE,
+                        //   fontWeight: FontWeight.w900,
+
+                        // ),
+                        style: GoogleFonts.staatliches(
+                          color: ProjectVariables.MAIN_COLOR,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
                         ),
                       )
                     : Container(),

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hltb/private-creds.dart';
 import 'package:http/http.dart' as http;
 
@@ -199,11 +200,10 @@ class _GameDetailState extends State<GameDetail> {
                               gameDetail['name'],
                               // 'sss',
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 25,
-                                // color: Color.fromARGB(255, 72, 0, 255),
+                              style: GoogleFonts.staatliches(
                                 color: ProjectVariables.SEXY_WHITE,
-                                fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 35,
                               ),
                             ),
                           ),
@@ -281,11 +281,10 @@ class _GameDetailState extends State<GameDetail> {
                                 ),
                                 Text(
                                   'How long to beat?',
-                                  style: TextStyle(
-                                    // color: Color.fromARGB(255, 72, 0, 255),
+                                  style: GoogleFonts.staatliches(
                                     color: ProjectVariables.SEXY_WHITE,
-                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 25,
                                   ),
                                 ),
                                 PlayTimeBoard(
@@ -305,28 +304,32 @@ class _GameDetailState extends State<GameDetail> {
                                 ),
                                 Text(
                                   'Description',
-                                  style: TextStyle(
-                                    // color: Color.fromARGB(255, 72, 0, 255),
+                                  style: GoogleFonts.staatliches(
                                     color: ProjectVariables.SEXY_WHITE,
-                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 25,
                                   ),
                                 ),
                                 Text(
                                   (_useMetacriticForGameDetails == false)
                                       ? gameDetail['description']
                                       : _metacriticGameDetail,
-                                  style: TextStyle(
-                                    // color: Colors.white,
-                                    // color: ProjectVariables.INPUT_TEXT_COLOR_2,
+                                  // style: TextStyle(
+                                  //   // color: Colors.white,
+                                  //   // color: ProjectVariables.INPUT_TEXT_COLOR_2,
+                                  //   color: ProjectVariables.SEXY_WHITE,
+                                  // ),
+                                  style: GoogleFonts.barlowCondensed(
                                     color: ProjectVariables.SEXY_WHITE,
+                                    // fontWeight: FontWeight.bold,
+                                    fontSize: 15,
                                   ),
                                 ),
                                 Text(
                                   (_useMetacriticForGameDetails == false)
                                       ? ''
                                       : 'Powered By Metacritic',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12,
                                     color: Color.fromARGB(111, 255, 255, 255),
                                   ),
@@ -336,11 +339,10 @@ class _GameDetailState extends State<GameDetail> {
                                 ),
                                 Text(
                                   'Playable On',
-                                  style: TextStyle(
-                                    // color: Color.fromARGB(255, 72, 0, 255),
+                                  style: GoogleFonts.staatliches(
                                     color: ProjectVariables.SEXY_WHITE,
-                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 25,
                                   ),
                                 ),
                                 Text(
@@ -355,9 +357,10 @@ class _GameDetailState extends State<GameDetail> {
                                                 1,
                                           )
                                       : 'Not Available',
-                                  style: TextStyle(
+                                  style: GoogleFonts.barlowCondensed(
                                     color: ProjectVariables.SEXY_WHITE,
-                                    // color: ProjectVariables.INPUT_TEXT_COLOR_2,
+                                    // fontWeight: FontWeight.bold,
+                                    fontSize: 15,
                                   ),
                                 ),
                               ],
