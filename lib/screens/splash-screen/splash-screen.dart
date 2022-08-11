@@ -19,7 +19,12 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
 
   doAsyncJob(context) async {
     await Provider.of<UserFavouriteGameProvider>(context, listen: false)
-        .fetchFavouriteGameDetails();
+        .fetchFavouriteGamesFromDatabase();
+    // .fetchFavouriteGameDetails();
+    // print(context
+    //     .watch<UserFavouriteGameProvider>()
+    //     .userFavouriteGameList
+    //     .toString());
 
     await Provider.of<PopularGamesProvider>(context, listen: false)
         .getPopularGames();

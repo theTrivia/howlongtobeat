@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           "/login": (context) => Login(),
           "/signup": (context) => Signup(),
           "/appMainPage": (context) => SearchPage(),
-          "/userFav": (context) => UserFav(),
+          // "/userFav": (context) => UserFav(),
         },
         theme: ThemeData(
           primarySwatch: Colors.blue,
