@@ -13,8 +13,8 @@ class PopularGameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<UserFavouriteGameProvider>(context, listen: false)
-          .fetchFavouriteGameDetails(),
+      // future: Provider.of<UserFavouriteGameProvider>(context, listen: false)
+      //     .fetchFavouriteGameDetails(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         var gameId =
             context.watch<PopularGamesProvider>().popularGames[index]['gameId'];

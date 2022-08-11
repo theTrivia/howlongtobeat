@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -17,10 +18,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   var _selectedindex = 0;
-  static List<Widget> _widgetOptions = [
-    SearchPage(),
-    UserFav(),
-  ];
 
   void _onItemTapped(index) {
     setState(() {
@@ -30,6 +27,10 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _widgetOptions = [
+      SearchPage(),
+      UserFav(context.watch<UserFavouriteGameProvider>().userFavouriteGameList),
+    ];
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedindex),
       extendBody: true,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/functions/on-fav-icon-pressed.dart';
@@ -33,13 +34,14 @@ class GameCard extends StatefulWidget {
 }
 
 class _GameCardState extends State<GameCard> {
+  var _showOverlay = 'no';
   var _isIconButtonClicked = false;
   // 0 == !fav , 1 == fav
   var _favIcon = 0;
 
   doAsyncJob() async {
-    await Provider.of<UserFavouriteGameProvider>(context, listen: false)
-        .fetchFavouriteGameDetails();
+    // await Provider.of<UserFavouriteGameProvider>(context, listen: false)
+    //     .fetchFavouriteGameDetails();
   }
 
   @override
@@ -127,6 +129,9 @@ class _GameCardState extends State<GameCard> {
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
+                      setState(() {
+                        _showOverlay = 'yes';
+                      });
                       onFavIconPress(widget.id, context);
                       setState(() {
                         if (_favIcon == 0) {
@@ -140,6 +145,9 @@ class _GameCardState extends State<GameCard> {
                             _favIcon = 0;
                           });
                         }
+                      });
+                      setState(() {
+                        _showOverlay = 'no';
                       });
                     },
                     // icon: (widget.isGameAddedInFavList == true)

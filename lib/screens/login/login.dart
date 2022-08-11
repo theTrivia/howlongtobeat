@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
 
       //fetching users favourite games list after login
       await Provider.of<UserFavouriteGameProvider>(context, listen: false)
-          .fetchFavouriteGameDetails();
+          .fetchFavouriteGamesFromDatabase();
 
       Navigator.pushNamed(context, '/mainPage');
     }
@@ -144,7 +144,7 @@ class _LoginState extends State<Login> {
                             await Provider.of<UserFavouriteGameProvider>(
                                     context,
                                     listen: false)
-                                .fetchFavouriteGameDetails();
+                                .fetchFavouriteGamesFromDatabase();
 
                             await Provider.of<PopularGamesProvider>(context,
                                     listen: false)
