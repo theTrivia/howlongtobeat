@@ -188,16 +188,15 @@ class _GameDetailState extends State<GameDetail> {
         //   Navigator.pop(context);
         //   return Future.value(true);
         // }
-        print(await context
-            .watch<ShowOverlayLoaderProvider>()
-            .shouldShowOverlayLoader);
+        print(
+            context.watch<ShowOverlayLoaderProvider>().shouldShowOverlayLoader);
         if (context
                 .watch<ShowOverlayLoaderProvider>()
                 .shouldShowOverlayLoader ==
             false) {
           return Future.value(true);
         } else {
-          Navigator.pop(context);
+          Navigator.pushNamed(context, '/mainPage');
           return Future.value(false);
         }
       },

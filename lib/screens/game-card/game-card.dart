@@ -130,7 +130,7 @@ class _GameCardState extends State<GameCard> {
                     onPressed: () {
                       Provider.of<ShowOverlayLoaderProvider>(context,
                               listen: false)
-                          .shouldShowOverlayLoader(true);
+                          .changeShowOverlayState(true);
                       onFavIconPress(widget.id, context);
                       setState(() {
                         if (_favIcon == 0) {
@@ -147,7 +147,7 @@ class _GameCardState extends State<GameCard> {
                       });
                       Provider.of<ShowOverlayLoaderProvider>(context,
                               listen: false)
-                          .shouldShowOverlayLoader(false);
+                          .changeShowOverlayState(false);
                     },
                     // icon: (widget.isGameAddedInFavList == true)
                     //     ? Icon(FontAwesomeIcons.heartCrack)
