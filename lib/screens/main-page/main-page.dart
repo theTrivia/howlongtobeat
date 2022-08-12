@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../providers/show-overlaw-loader-provider.dart';
 import '../../providers/user-favourite-game-provider.dart';
 import '../../project-variables.dart';
 import '../search-page/search-page.dart';
@@ -20,8 +21,25 @@ class _MainPageState extends State<MainPage> {
   var _selectedindex = 0;
 
   void _onItemTapped(index) {
+    // if (context.watch<ShowOverlayLoaderProvider>().shouldShowOverlayLoader ==
+    //     false) {
+    //   setState(() {
+    //     _selectedindex = index;
+    //   });
+    // } else {
+    //   setState(() {
+    //     _selectedindex = _selectedindex;
+    //   });
+    // }
     setState(() {
       _selectedindex = index;
+    });
+  }
+
+  //method to handle when game data is still being added.
+  _bogus(index) {
+    setState(() {
+      _selectedindex = _selectedindex;
     });
   }
 
@@ -54,7 +72,12 @@ class _MainPageState extends State<MainPage> {
             )
           ],
           currentIndex: _selectedindex,
-          onTap: _onItemTapped,
+          onTap: (context
+                      .watch<ShowOverlayLoaderProvider>()
+                      .shouldShowOverlayLoader ==
+                  false)
+              ? _onItemTapped
+              : _bogus,
         ),
       ),
     );

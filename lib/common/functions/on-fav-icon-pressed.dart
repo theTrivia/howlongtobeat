@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'package:hltb/private-creds.dart';
 import 'package:hltb/providers/show-overlaw-loader-provider.dart';
 import 'package:provider/provider.dart';
@@ -17,12 +19,14 @@ var db = FirebaseFirestore.instance;
 onFavIconPress(gameId, context) async {
   // print(gameId);
   //delay for testing purpose
+
   Provider.of<ShowOverlayLoaderProvider>(context, listen: false)
       .changeShowOverlayState(true);
-  await Future.delayed(Duration(seconds: 5));
-  await checkAndSaveGameIfUserLikesTheGame(gameId, context);
-  Provider.of<ShowOverlayLoaderProvider>(context, listen: false)
-      .changeShowOverlayState(false);
+  // await Future.delayed(Duration(seconds: 5));
+  await checkAndSaveGameIfUserLikesTheGame(gameId, context).then((_) {
+    Provider.of<ShowOverlayLoaderProvider>(context, listen: false)
+        .changeShowOverlayState(false);
+  });
 }
 
 //searches for the game id is present in user's database. If the game is not present, then the game is added

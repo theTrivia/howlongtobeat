@@ -128,9 +128,26 @@ class _GameCardState extends State<GameCard> {
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      Provider.of<ShowOverlayLoaderProvider>(context,
-                              listen: false)
-                          .changeShowOverlayState(true);
+                      //snackbar code needs to be refactored.
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: ProjectVariables.MAIN_COLOR,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          content: Container(
+                            color: ProjectVariables.MAIN_COLOR,
+                            child: Text(
+                              'Saving',
+                              style: GoogleFonts.barlowCondensed(
+                                color: ProjectVariables.SEXY_WHITE,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          )));
+                      // Provider.of<ShowOverlayLoaderProvider>(context,
+                      //         listen: false)
+                      // .changeShowOverlayState(true);
                       onFavIconPress(widget.id, context);
                       setState(() {
                         if (_favIcon == 0) {
@@ -145,9 +162,9 @@ class _GameCardState extends State<GameCard> {
                           });
                         }
                       });
-                      Provider.of<ShowOverlayLoaderProvider>(context,
-                              listen: false)
-                          .changeShowOverlayState(false);
+                      // Provider.of<ShowOverlayLoaderProvider>(context,
+                      //         listen: false)
+                      //     .changeShowOverlayState(false);
                     },
                     // icon: (widget.isGameAddedInFavList == true)
                     //     ? Icon(FontAwesomeIcons.heartCrack)

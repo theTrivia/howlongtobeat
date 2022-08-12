@@ -178,28 +178,28 @@ class _GameDetailState extends State<GameDetail> {
     }
   }
 
+  goBack() {
+    Navigator.pop(context);
+    return Future.value(true);
+  }
+
+  stay() {
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        // if (_savingData == true) {
-        //   return Future.value(false);
-        // } else {
-        //   Navigator.pop(context);
-        //   return Future.value(true);
-        // }
-        print(
-            context.watch<ShowOverlayLoaderProvider>().shouldShowOverlayLoader);
-        if (context
-                .watch<ShowOverlayLoaderProvider>()
-                .shouldShowOverlayLoader ==
-            false) {
-          return Future.value(true);
-        } else {
-          Navigator.pushNamed(context, '/mainPage');
-          return Future.value(false);
-        }
-      },
+      onWillPop:
+          (context.watch<ShowOverlayLoaderProvider>().shouldShowOverlayLoader ==
+                  false)
+              ? () {
+                  Navigator.pop(context);
+                  return Future.value(true);
+                }
+              : () {
+                  return Future.value(false);
+                },
       child: Scaffold(
         // backgroundColor: ProjectVariables.BACKGROUND_COLOR,
         body: Container(
@@ -296,6 +296,34 @@ class _GameDetailState extends State<GameDetail> {
                                         color: ProjectVariables.MAIN_COLOR_DARK,
                                         child: IconButton(
                                           onPressed: () {
+                                            //snackbar code needs to be refactored.
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    backgroundColor:
+                                                        ProjectVariables
+                                                            .MAIN_COLOR,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    content: Container(
+                                                      color: ProjectVariables
+                                                          .MAIN_COLOR,
+                                                      child: Text(
+                                                        'Saving',
+                                                        style: GoogleFonts
+                                                            .barlowCondensed(
+                                                          color:
+                                                              ProjectVariables
+                                                                  .SEXY_WHITE,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15,
+                                                        ),
+                                                      ),
+                                                    )));
                                             // setState(() {
                                             //   _savingData = true;
                                             // });

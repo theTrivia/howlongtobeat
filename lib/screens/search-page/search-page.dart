@@ -12,6 +12,7 @@ import '../../common/widgets/loading-anime.dart';
 import '../../methods/logout.dart';
 import '../../project-variables.dart';
 import '../../providers/search-game-provider.dart';
+import '../../providers/show-overlaw-loader-provider.dart';
 import '../games-list/games-list.dart';
 import '../static-widgets/start-searching.dart';
 
@@ -33,9 +34,18 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     var gameSearchEditingController = TextEditingController();
     return WillPopScope(
-      onWillPop: () {
-        exit(0);
-      },
+      // onWillPop: () {
+      //   exit(0);
+      // },
+      onWillPop:
+          (context.watch<ShowOverlayLoaderProvider>().shouldShowOverlayLoader ==
+                  false)
+              ? () {
+                  exit(0);
+                }
+              : () {
+                  return Future.value(false);
+                },
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(

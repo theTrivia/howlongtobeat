@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 import '../../private-creds.dart';
 import '../../providers/search-game-provider.dart';
+import '../../providers/show-overlaw-loader-provider.dart';
 import '../../providers/user-favourite-game-provider.dart';
 import '../game-card/game-card.dart';
 
@@ -95,10 +96,16 @@ class _UserFavState extends State<UserFav> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        Navigator.pushNamed(context, '/mainPage');
-        return Future.value(true);
-      },
+      onWillPop:
+          (context.watch<ShowOverlayLoaderProvider>().shouldShowOverlayLoader ==
+                  false)
+              ? () {
+                  Navigator.pushNamed(context, '/mainPage');
+                  return Future.value(true);
+                }
+              : () {
+                  return Future.value(false);
+                },
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
@@ -112,7 +119,10 @@ class _UserFavState extends State<UserFav> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    'favourites',
+                    context
+                        .watch<ShowOverlayLoaderProvider>()
+                        .shouldShowOverlayLoader
+                        .toString(),
                     style: TextStyle(
                       fontSize: 30,
                       color: ProjectVariables.SEXY_WHITE,
@@ -163,7 +173,7 @@ class _UserFavState extends State<UserFav> {
                                       .favGameDetails[gameIds[index]]
                                           ['gameplayCompletionist']
                                       .toString(),
-                                  isGameAddedInFavList: isGamePresentInFavList,
+                                  isGameAddedInFavList: true,
                                 ),
                                 (index + 1 ==
                                             context
