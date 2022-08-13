@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hltb/providers/popular-games-provider.dart';
 import 'package:hltb/providers/show-overlaw-loader-provider.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,10 @@ import '../screens/user-fav/user-fav.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

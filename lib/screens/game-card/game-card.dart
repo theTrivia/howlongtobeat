@@ -19,6 +19,9 @@ class GameCard extends StatefulWidget {
   final String gameplayCompletionist;
   final bool isGameAddedInFavList;
 
+  //variable to encounter if the widget is FavPage. If the widget is so then, default icon will be FontAwesomeIcons.heartCrack.
+  var isWidgetFavPage;
+
   GameCard({
     required this.id,
     required this.name,
@@ -27,6 +30,7 @@ class GameCard extends StatefulWidget {
     required this.gameplayMainExtra,
     required this.gameplayCompletionist,
     required this.isGameAddedInFavList,
+    this.isWidgetFavPage: false,
   });
 
   @override
@@ -145,9 +149,7 @@ class _GameCardState extends State<GameCard> {
                               ),
                             ),
                           )));
-                      // Provider.of<ShowOverlayLoaderProvider>(context,
-                      //         listen: false)
-                      // .changeShowOverlayState(true);
+
                       onFavIconPress(widget.id, context);
                       setState(() {
                         if (_favIcon == 0) {
@@ -166,16 +168,22 @@ class _GameCardState extends State<GameCard> {
                       //         listen: false)
                       //     .changeShowOverlayState(false);
                     },
-                    // icon: (widget.isGameAddedInFavList == true)
-                    //     ? Icon(FontAwesomeIcons.heartCrack)
-                    //     : Icon(FontAwesomeIcons.solidHeart),
-                    icon: (_favIcon == 0)
-                        ? Icon(
-                            FontAwesomeIcons.solidHeart,
+                    // icon: (_favIcon == 0)
+                    //     ? const Icon(
+                    //         FontAwesomeIcons.solidHeart,
+                    //         color: Colors.white,
+                    //       )
+                    //     : const Icon(
+                    //         FontAwesomeIcons.heartCrack,
+                    //         color: Colors.white,
+                    //       ),
+                    icon: (_favIcon != 0 || widget.isWidgetFavPage == true)
+                        ? const Icon(
+                            FontAwesomeIcons.heartCrack,
                             color: Colors.white,
                           )
-                        : Icon(
-                            FontAwesomeIcons.heartCrack,
+                        : const Icon(
+                            FontAwesomeIcons.solidHeart,
                             color: Colors.white,
                           ),
                     color: Colors.white,

@@ -174,6 +174,7 @@ class _UserFavState extends State<UserFav> {
                                           ['gameplayCompletionist']
                                       .toString(),
                                   isGameAddedInFavList: true,
+                                  isWidgetFavPage: true,
                                 ),
                                 (index + 1 ==
                                             context
