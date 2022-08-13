@@ -25,10 +25,12 @@ class UserFav extends StatefulWidget {
 class _UserFavState extends State<UserFav> {
   var favGames = [];
   var gameIds;
+  var _indexForCount = 0;
 
   @override
   void initState() {
     super.initState();
+
     gameIds = widget.ids;
 
     fetchPosts();
@@ -41,6 +43,13 @@ class _UserFavState extends State<UserFav> {
       }
     });
   }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   _indexForCount = 0;
+  //   super.dispose();
+  // }
 
   int size = 8;
 
@@ -116,13 +125,22 @@ class _UserFavState extends State<UserFav> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'fetched till ---- ${_indexForCount}',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                Text(
+                  'total : ${context.watch<UserFavouriteGameProvider>().userFavouriteGameList.length.toString()}',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                Text(
+                  'fav game detail length ${context.watch<UserFavouriteGameProvider>().favGameDetails.length.toString()}',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    context
-                        .watch<ShowOverlayLoaderProvider>()
-                        .shouldShowOverlayLoader
-                        .toString(),
+                    'favourites',
                     style: TextStyle(
                       fontSize: 30,
                       color: ProjectVariables.SEXY_WHITE,
@@ -143,6 +161,14 @@ class _UserFavState extends State<UserFav> {
                           controller: _scrollController,
                           itemBuilder: ((context, index) {
                             var isGamePresentInFavList = true;
+
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              if (this.mounted) {
+                                setState(() {
+                                  _indexForCount = index;
+                                });
+                              }
+                            });
 
                             return Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -182,7 +208,7 @@ class _UserFavState extends State<UserFav> {
                                                     UserFavouriteGameProvider>()
                                                 .favGameDetails
                                                 .length &&
-                                        index <
+                                        _indexForCount + 1 <
                                             context
                                                 .watch<
                                                     UserFavouriteGameProvider>()
@@ -190,6 +216,7 @@ class _UserFavState extends State<UserFav> {
                                                 .length)
                                     ? LoadingAnime(
                                         ProjectVariables.SEXY_WHITE,
+                                        size: 50,
                                       )
                                     : Container(),
                               ],
