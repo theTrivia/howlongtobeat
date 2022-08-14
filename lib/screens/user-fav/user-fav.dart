@@ -34,6 +34,9 @@ class _UserFavState extends State<UserFav> {
   bool loading = false;
   bool allLoaded = false;
 
+  bool _shouldShowSmallLoader = false;
+  bool _shouldShowBigLoader = false;
+
   @override
   void initState() {
     super.initState();
@@ -157,18 +160,6 @@ class _UserFavState extends State<UserFav> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'fetched till ---- ${fetchedTill}',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                Text(
-                  'total : ${context.watch<UserFavouriteGameProvider>().userFavouriteGameList.length.toString()}',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                Text(
-                  'fav game detail length ${context.watch<UserFavouriteGameProvider>().favGameDetails.length.toString()}',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
@@ -192,10 +183,36 @@ class _UserFavState extends State<UserFav> {
                               .length,
                           controller: _scrollController,
                           itemBuilder: ((context, index) {
-                            var isGamePresentInFavList = true;
-
                             WidgetsBinding.instance.addPostFrameCallback((_) {
+                              // if (Provider.of<UserFavouriteGameProvider>(
+                              //             context,
+                              //             listen: false)
+                              //         .favGameDetails[gameIds[index]] ==
+                              //     null) {
+                              //   setState(() {
+                              //     _shouldShowBigLoader = true;
+                              //   });
+                              // }
+                              // if (index > 0) {
+                              //   setState(() {
+                              //     _shouldShowBigLoader = false;
+                              //   });
+                              // }
                               if (this.mounted) {
+                                if (Provider.of<UserFavouriteGameProvider>(
+                                            context,
+                                            listen: false)
+                                        .favGameDetails[gameIds[index]] ==
+                                    null) {
+                                  setState(() {
+                                    _shouldShowBigLoader = true;
+                                  });
+                                }
+                                if (index > 0) {
+                                  setState(() {
+                                    _shouldShowBigLoader = false;
+                                  });
+                                }
                                 setState(() {
                                   _indexForCount = index;
                                 });
@@ -211,15 +228,17 @@ class _UserFavState extends State<UserFav> {
                                             .watch<UserFavouriteGameProvider>()
                                             .favGameDetails[gameIds[index]] ==
                                         null)
-                                    ? Padding(
-                                        padding: EdgeInsets.only(
-                                            top: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.35),
-                                        child: LoadingAnime(
-                                            ProjectVariables.SEXY_WHITE),
-                                      )
+                                    // ? Padding(
+                                    //     padding: EdgeInsets.only(
+                                    //         top: MediaQuery.of(context)
+                                    //                 .size
+                                    //                 .height *
+                                    //             0.35),
+                                    //     child: LoadingAnime(
+                                    //       ProjectVariables.SEXY_WHITE,
+                                    //     ),
+                                    //   )
+                                    ? Container()
                                     : GameCard(
                                         id: context
                                             .watch<UserFavouriteGameProvider>()
@@ -262,21 +281,77 @@ class _UserFavState extends State<UserFav> {
                                                     UserFavouriteGameProvider>()
                                                 .userFavouriteGameList
                                                 .length)
-                                    ? LoadingAnime(
-                                        ProjectVariables.SEXY_WHITE,
-                                        size: 50,
-                                      )
+                                    // ? LoadingAnime(
+                                    //     ProjectVariables.SEXY_WHITE,
+                                    //     size: 50,
+                                    //   )
+                                    ? Container()
                                     : Container(),
                               ],
                             );
                           }),
                         ),
                       )
-                    : Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.35),
-                        child: LoadingAnime(ProjectVariables.SEXY_WHITE),
-                      ),
+                    // : Padding(
+                    //     padding: EdgeInsets.only(
+                    //         top: MediaQuery.of(context).size.height * 0.35),
+                    //     child: LoadingAnime(ProjectVariables.SEXY_WHITE),
+                    //   ),
+                    : Container(),
+                (loading == true &&
+                        _indexForCount > 1 &&
+                        _indexForCount <
+                            context
+                                .watch<UserFavouriteGameProvider>()
+                                .userFavouriteGameList
+                                .length)
+                    ? LoadingAnime(
+                        ProjectVariables.SEXY_WHITE,
+                        size: 50,
+                      )
+                    : Container(),
+                // (_shouldShowBigLoader == true)
+                //     ? Container(
+                //         margin: EdgeInsets.only(
+                //             top: MediaQuery.of(context).size.height * 0.5),
+                //         child: LoadingAnime(
+                //           ProjectVariables.SEXY_WHITE,
+                //         ),
+                //       )
+                //     : Container(),
+                (_shouldShowBigLoader == true)
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            LoadingAnime(
+                              ProjectVariables.SEXY_WHITE,
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
+                // (fetchedTill < size && _shouldShowBigLoader == false)
+                //     ? Container(
+                //         child: LoadingAnime(ProjectVariables.SEXY_WHITE),
+                //         margin: EdgeInsets.only(
+                //             bottom: MediaQuery.of(context).size.height * 0.5),
+                //       )
+                //     : Container()
+                (fetchedTill < size && _shouldShowBigLoader == false)
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            LoadingAnime(
+                              ProjectVariables.SEXY_WHITE,
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
               ],
             );
           }
