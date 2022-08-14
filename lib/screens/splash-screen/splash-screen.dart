@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hltb/providers/popular-games-provider.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
+import '../../private-creds.dart';
 import '../../project-variables.dart';
 import '../../providers/user-favourite-game-provider.dart';
 
@@ -28,6 +31,19 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
 
     await Provider.of<PopularGamesProvider>(context, listen: false)
         .getPopularGames();
+
+    // //fetch first fav game details
+    // Map<String, dynamic> result = {};
+    // var gameId = Provider.of<UserFavouriteGameProvider>(context, listen: false)
+    //     .userFavouriteGameList[0];
+    // var res = await http.get(
+    //   Uri.parse(PrivateCreds.HELPER_SERVER + 'gameDetail/' + gameId.toString()),
+    // );
+    // var r = jsonDecode(res.body)['result'];
+    // // print(r);
+    // result[gameId] = r;
+    // Provider.of<UserFavouriteGameProvider>(context, listen: false)
+    //     .addFavGameDetailToList(result);
   }
 
   // fetchPopularGames() async {

@@ -150,7 +150,20 @@ class _GameCardState extends State<GameCard> {
                             ),
                           )));
 
-                      onFavIconPress(widget.id, context);
+                      // if (context
+                      //         .watch<ShowOverlayLoaderProvider>()
+                      //         .shouldShowOverlayLoader ==
+                      //     true)
+                      if (Provider.of<ShowOverlayLoaderProvider>(context,
+                                  listen: false)
+                              .shouldShowOverlayLoader ==
+                          true) {
+                        print('cannot perform action as some process is going');
+                        return;
+                      } else {
+                        onFavIconPress(widget.id, context);
+                      }
+
                       setState(() {
                         if (_favIcon == 0) {
                           print(_favIcon);

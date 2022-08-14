@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hltb/common/widgets/loading-anime.dart';
 import 'package:hltb/project-variables.dart';
+import 'package:hltb/providers/fav-scroller-provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,9 +28,34 @@ class _UserFavState extends State<UserFav> {
   var gameIds;
   var _indexForCount = 0;
 
+  var fetchedTill = 0;
+  int size = 8;
+
+  bool loading = false;
+  bool allLoaded = false;
+
   @override
   void initState() {
     super.initState();
+    // if (this.mounted) {
+    //   setState(() {
+    //     fetchedTill = 0;
+    //   });
+    // }
+
+    // if (this.mounted) {
+    //   fetchedTill =
+    //       Provider.of<FavScrollerProvider>(context, listen: false).fetchedTill;
+    //   print(fetchedTill);
+    // }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (this.mounted) {
+        fetchedTill = Provider.of<FavScrollerProvider>(context, listen: false)
+            .fetchedTill;
+        print(fetchedTill);
+      }
+    });
 
     gameIds = widget.ids;
 
@@ -51,13 +77,6 @@ class _UserFavState extends State<UserFav> {
   //   super.dispose();
   // }
 
-  int size = 8;
-
-  bool loading = false;
-  bool allLoaded = false;
-
-  var fetchedTill = 0;
-
   final ScrollController _scrollController = ScrollController();
 
   apiCall() async {
@@ -77,6 +96,9 @@ class _UserFavState extends State<UserFav> {
       }
     }
 
+    Provider.of<FavScrollerProvider>(context, listen: false)
+        .changeFetchedTillCounter(fetchedTill + size);
+
     setState(() {
       fetchedTill = fetchedTill + size;
     });
@@ -85,9 +107,18 @@ class _UserFavState extends State<UserFav> {
   }
 
   fetchPosts() async {
+    // if (fetchedTill >=
+    //     Provider.of<UserFavouriteGameProvider>(context, listen: false)
+    //         .favGameDetails
+    //         .length) {
+    //   Provider.of<ShowOverlayLoaderProvider>(context, listen: false)
+    //       .changeShowOverlayState(false);
+    // }
     if (allLoaded) {
       return;
     } else {
+      // Provider.of<ShowOverlayLoaderProvider>(context, listen: false)
+      //     .changeShowOverlayState(true);
       setState(() {
         loading = true;
       });
@@ -96,7 +127,8 @@ class _UserFavState extends State<UserFav> {
     var res = await apiCall();
     Provider.of<UserFavouriteGameProvider>(context, listen: false)
         .addFavGameDetailToList(res);
-
+    // Provider.of<ShowOverlayLoaderProvider>(context, listen: false)
+    //     .changeShowOverlayState(false);
     setState(() {
       loading = false;
     });
@@ -126,7 +158,7 @@ class _UserFavState extends State<UserFav> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'fetched till ---- ${_indexForCount}',
+                  'fetched till ---- ${fetchedTill}',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 Text(
@@ -173,35 +205,51 @@ class _UserFavState extends State<UserFav> {
                             return Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                GameCard(
-                                  id: context
-                                      .watch<UserFavouriteGameProvider>()
-                                      .favGameDetails[gameIds[index]]['id'],
-                                  name: context
-                                      .watch<UserFavouriteGameProvider>()
-                                      .favGameDetails[gameIds[index]]['name'],
-                                  imageUrl: context
-                                          .watch<UserFavouriteGameProvider>()
-                                          .favGameDetails[gameIds[index]]
-                                      ['imageUrl'],
-                                  gameplayMain: context
-                                      .watch<UserFavouriteGameProvider>()
-                                      .favGameDetails[gameIds[index]]
-                                          ['gameplayMain']
-                                      .toString(),
-                                  gameplayMainExtra: context
-                                      .watch<UserFavouriteGameProvider>()
-                                      .favGameDetails[gameIds[index]]
-                                          ['gameplayMainExtra']
-                                      .toString(),
-                                  gameplayCompletionist: context
-                                      .watch<UserFavouriteGameProvider>()
-                                      .favGameDetails[gameIds[index]]
-                                          ['gameplayCompletionist']
-                                      .toString(),
-                                  isGameAddedInFavList: true,
-                                  isWidgetFavPage: true,
-                                ),
+                                /*logic to fix when user adds a new game into fav list 
+                                before fetching the fav games details*/
+                                (context
+                                            .watch<UserFavouriteGameProvider>()
+                                            .favGameDetails[gameIds[index]] ==
+                                        null)
+                                    ? Padding(
+                                        padding: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.35),
+                                        child: LoadingAnime(
+                                            ProjectVariables.SEXY_WHITE),
+                                      )
+                                    : GameCard(
+                                        id: context
+                                            .watch<UserFavouriteGameProvider>()
+                                            .favGameDetails[gameIds[index]]['id'],
+                                        name: context
+                                                .watch<UserFavouriteGameProvider>()
+                                                .favGameDetails[gameIds[index]]
+                                            ['name'],
+                                        imageUrl: context
+                                                .watch<UserFavouriteGameProvider>()
+                                                .favGameDetails[gameIds[index]]
+                                            ['imageUrl'],
+                                        gameplayMain: context
+                                            .watch<UserFavouriteGameProvider>()
+                                            .favGameDetails[gameIds[index]]
+                                                ['gameplayMain']
+                                            .toString(),
+                                        gameplayMainExtra: context
+                                            .watch<UserFavouriteGameProvider>()
+                                            .favGameDetails[gameIds[index]]
+                                                ['gameplayMainExtra']
+                                            .toString(),
+                                        gameplayCompletionist: context
+                                            .watch<UserFavouriteGameProvider>()
+                                            .favGameDetails[gameIds[index]]
+                                                ['gameplayCompletionist']
+                                            .toString(),
+                                        isGameAddedInFavList: true,
+                                        isWidgetFavPage: true,
+                                      ),
                                 (index + 1 ==
                                             context
                                                 .watch<
