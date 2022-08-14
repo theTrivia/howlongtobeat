@@ -52,12 +52,6 @@ fetchGameDetailFromMetcriticBackendServer(
           uniformPlatform +
           '/' +
           cleanedGameName));
-  // print(res);
-  print(PrivateCreds.METACRITIC_GAME_DETAIL_SERVER +
-      'gameDetail/' +
-      uniformPlatform +
-      '/' +
-      cleanedGameName);
 
   return res;
 }

@@ -4,17 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:hltb/providers/fav-scroller-provider.dart';
 import 'package:hltb/providers/popular-games-provider.dart';
 import 'package:hltb/providers/show-overlaw-loader-provider.dart';
+import './routes.dart';
 import 'package:provider/provider.dart';
 
 import './firebase_options.dart';
 
 import '../providers/user-favourite-game-provider.dart';
 import '../providers/search-game-provider.dart';
-import '../screens/splash-screen/splash-screen.dart';
 import '../screens/main-page/main-page.dart';
-import '../screens/login/login.dart';
 import '../screens/search-page/search-page.dart';
-import '../screens/signup/signup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,14 +54,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         initialRoute: '/splashScreen',
-        routes: {
-          "/splashScreen": (context) => SplashScreen(),
-          "/mainPage": (context) => const MainPage(),
-          "/login": (context) => Login(),
-          "/signup": (context) => Signup(),
-          "/appMainPage": (context) => SearchPage(),
-          // "/userFav": (context) => UserFav(),
-        },
+        routes: routes,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

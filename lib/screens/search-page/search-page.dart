@@ -47,6 +47,7 @@ class _SearchPageState extends State<SearchPage> {
                   return Future.value(false);
                 },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           decoration: BoxDecoration(
             // color: Colors.black.withOpacity(100),
@@ -184,7 +185,7 @@ class _SearchPageState extends State<SearchPage> {
                     : Container(),
                 (_shouldWeLoadAnime == true)
                     ? Container(
-                        height: MediaQuery.of(context).size.height * 0.7,
+                        height: MediaQuery.of(context).size.height * 0.4,
                         // color: Colors.red,
                         child: LoadingAnime(ProjectVariables.MAIN_COLOR),
                       )
