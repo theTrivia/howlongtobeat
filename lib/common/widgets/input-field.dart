@@ -33,7 +33,7 @@ class InputField extends StatelessWidget {
       // fontSize: 25,
       // color: Color.fromARGB(255, 72, 0, 255),
       // fontWeight: FontWeight.w900,
-      style: GoogleFonts.staatliches(
+      style: GoogleFonts.barlowCondensed(
         color: inputTextColor,
         fontWeight: FontWeight.bold,
         fontSize: 25,

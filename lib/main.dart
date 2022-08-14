@@ -15,7 +15,6 @@ import '../screens/main-page/main-page.dart';
 import '../screens/login/login.dart';
 import '../screens/search-page/search-page.dart';
 import '../screens/signup/signup.dart';
-import '../screens/user-fav/user-fav.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +43,7 @@ void main() async {
         create: (_) => FavScrollerProvider(),
       ),
     ],
-    child: MyApp(),
+    child: const MyApp(),
   ));
 }
 
@@ -59,7 +58,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/splashScreen',
         routes: {
           "/splashScreen": (context) => SplashScreen(),
-          "/mainPage": (context) => MainPage(),
+          "/mainPage": (context) => const MainPage(),
           "/login": (context) => Login(),
           "/signup": (context) => Signup(),
           "/appMainPage": (context) => SearchPage(),
@@ -68,7 +67,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Scaffold(
+        home: const Scaffold(
           body: MainPage(),
         ));
   }

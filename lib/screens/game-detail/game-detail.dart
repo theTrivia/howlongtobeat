@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -77,6 +76,7 @@ class _GameDetailState extends State<GameDetail> {
   @override
   void initState() {
     super.initState();
+
     if (widget.isGameAddedInFavList == true) {
       _favIcon = 1;
     } else {
@@ -159,24 +159,24 @@ class _GameDetailState extends State<GameDetail> {
         gameDetail = res;
         shouldWeLoad = false;
       });
-      print(gameDetail['name']);
+      print(gameDetail);
     });
   }
 
-  abc() {
-    print('hello');
-    print(context
-        .watch<ShowOverlayLoaderProvider>()
-        .shouldShowOverlayLoader
-        .toString());
-    if (context.watch<ShowOverlayLoaderProvider>().shouldShowOverlayLoader ==
-        false) {
-      return Future.value(false);
-    } else {
-      Navigator.pop(context);
-      return Future.value(true);
-    }
-  }
+  // abc() {
+  //   print('hello');
+  //   print(context
+  //       .watch<ShowOverlayLoaderProvider>()
+  //       .shouldShowOverlayLoader
+  //       .toString());
+  //   if (context.watch<ShowOverlayLoaderProvider>().shouldShowOverlayLoader ==
+  //       false) {
+  //     return Future.value(false);
+  //   } else {
+  //     Navigator.pop(context);
+  //     return Future.value(true);
+  //   }
+  // }
 
   goBack() {
     Navigator.pop(context);
