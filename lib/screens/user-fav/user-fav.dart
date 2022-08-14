@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hltb/common/widgets/loading-anime.dart';
 import 'package:hltb/project-variables.dart';
 import 'package:hltb/providers/fav-scroller-provider.dart';
+import 'package:hltb/screens/user-fav/empty-fav-list.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,6 +25,7 @@ class UserFav extends StatefulWidget {
 }
 
 class _UserFavState extends State<UserFav> {
+  bool _isUserListEmpty = false;
   var favGames = [];
   var gameIds;
   var _indexForCount = 0;
@@ -34,8 +36,7 @@ class _UserFavState extends State<UserFav> {
   bool loading = false;
   bool allLoaded = false;
 
-  bool _shouldShowSmallLoader = false;
-  bool _shouldShowBigLoader = false;
+  bool _shouldLoadBigLoaderProgrammatically = false;
 
   @override
   void initState() {
@@ -172,132 +173,151 @@ class _UserFavState extends State<UserFav> {
                   ),
                 ),
                 (context
-                        .watch<UserFavouriteGameProvider>()
-                        .favGameDetails
-                        .isNotEmpty)
-                    ? Flexible(
-                        child: ListView.builder(
-                          itemCount: context
-                              .watch<UserFavouriteGameProvider>()
-                              .favGameDetails
-                              .length,
-                          controller: _scrollController,
-                          itemBuilder: ((context, index) {
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              // if (Provider.of<UserFavouriteGameProvider>(
-                              //             context,
-                              //             listen: false)
-                              //         .favGameDetails[gameIds[index]] ==
-                              //     null) {
-                              //   setState(() {
-                              //     _shouldShowBigLoader = true;
-                              //   });
-                              // }
-                              // if (index > 0) {
-                              //   setState(() {
-                              //     _shouldShowBigLoader = false;
-                              //   });
-                              // }
-                              if (this.mounted) {
-                                if (Provider.of<UserFavouriteGameProvider>(
-                                            context,
-                                            listen: false)
-                                        .favGameDetails[gameIds[index]] ==
-                                    null) {
-                                  setState(() {
-                                    _shouldShowBigLoader = true;
-                                  });
-                                }
-                                if (index > 0) {
-                                  setState(() {
-                                    _shouldShowBigLoader = false;
-                                  });
-                                }
-                                setState(() {
-                                  _indexForCount = index;
-                                });
-                              }
-                            });
-
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                /*logic to fix when user adds a new game into fav list 
-                                before fetching the fav games details*/
-                                (context
-                                            .watch<UserFavouriteGameProvider>()
+                            .watch<UserFavouriteGameProvider>()
+                            .userFavouriteGameList
+                            .length ==
+                        0)
+                    ? EmptyFavList()
+                    : (context
+                            .watch<UserFavouriteGameProvider>()
+                            .favGameDetails
+                            .isNotEmpty)
+                        ? Flexible(
+                            child: ListView.builder(
+                              itemCount: context
+                                  .watch<UserFavouriteGameProvider>()
+                                  .favGameDetails
+                                  .length,
+                              controller: _scrollController,
+                              itemBuilder: ((context, index) {
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  // if (Provider.of<UserFavouriteGameProvider>(
+                                  //             context,
+                                  //             listen: false)
+                                  //         .favGameDetails[gameIds[index]] ==
+                                  //     null) {
+                                  //   setState(() {
+                                  //     _shouldLoadBigLoaderProgrammatically
+                                  // = true;
+                                  //   });
+                                  // }
+                                  // if (index > 0) {
+                                  //   setState(() {
+                                  //     _shouldLoadBigLoaderProgrammatically
+                                  // = false;
+                                  //   });
+                                  // }
+                                  if (this.mounted) {
+                                    if (Provider.of<UserFavouriteGameProvider>(
+                                                context,
+                                                listen: false)
                                             .favGameDetails[gameIds[index]] ==
-                                        null)
-                                    // ? Padding(
-                                    //     padding: EdgeInsets.only(
-                                    //         top: MediaQuery.of(context)
-                                    //                 .size
-                                    //                 .height *
-                                    //             0.35),
-                                    //     child: LoadingAnime(
-                                    //       ProjectVariables.SEXY_WHITE,
-                                    //     ),
-                                    //   )
-                                    ? Container()
-                                    : GameCard(
-                                        id: context
-                                            .watch<UserFavouriteGameProvider>()
-                                            .favGameDetails[gameIds[index]]['id'],
-                                        name: context
-                                                .watch<UserFavouriteGameProvider>()
-                                                .favGameDetails[gameIds[index]]
-                                            ['name'],
-                                        imageUrl: context
-                                                .watch<UserFavouriteGameProvider>()
-                                                .favGameDetails[gameIds[index]]
-                                            ['imageUrl'],
-                                        gameplayMain: context
-                                            .watch<UserFavouriteGameProvider>()
-                                            .favGameDetails[gameIds[index]]
-                                                ['gameplayMain']
-                                            .toString(),
-                                        gameplayMainExtra: context
-                                            .watch<UserFavouriteGameProvider>()
-                                            .favGameDetails[gameIds[index]]
-                                                ['gameplayMainExtra']
-                                            .toString(),
-                                        gameplayCompletionist: context
-                                            .watch<UserFavouriteGameProvider>()
-                                            .favGameDetails[gameIds[index]]
-                                                ['gameplayCompletionist']
-                                            .toString(),
-                                        isGameAddedInFavList: true,
-                                        isWidgetFavPage: true,
-                                      ),
-                                (index + 1 ==
-                                            context
+                                        null) {
+                                      setState(() {
+                                        _shouldLoadBigLoaderProgrammatically =
+                                            true;
+                                      });
+                                    }
+                                    if (index > 0) {
+                                      setState(() {
+                                        _shouldLoadBigLoaderProgrammatically =
+                                            false;
+                                      });
+                                    }
+                                    setState(() {
+                                      _indexForCount = index;
+                                    });
+                                  }
+                                });
+
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    /*logic to fix when user adds a new game into fav list 
+                                before fetching the fav games details*/
+                                    (context
                                                 .watch<
                                                     UserFavouriteGameProvider>()
-                                                .favGameDetails
-                                                .length &&
-                                        _indexForCount + 1 <
-                                            context
+                                                .favGameDetails[gameIds[index]] ==
+                                            null)
+                                        // ? Padding(
+                                        //     padding: EdgeInsets.only(
+                                        //         top: MediaQuery.of(context)
+                                        //                 .size
+                                        //                 .height *
+                                        //             0.35),
+                                        //     child: LoadingAnime(
+                                        //       ProjectVariables.SEXY_WHITE,
+                                        //     ),
+                                        //   )
+                                        ? Container()
+                                        : GameCard(
+                                            id: context
+                                                    .watch<
+                                                        UserFavouriteGameProvider>()
+                                                    .favGameDetails[
+                                                gameIds[index]]['id'],
+                                            name: context
+                                                    .watch<
+                                                        UserFavouriteGameProvider>()
+                                                    .favGameDetails[
+                                                gameIds[index]]['name'],
+                                            imageUrl: context
+                                                    .watch<
+                                                        UserFavouriteGameProvider>()
+                                                    .favGameDetails[
+                                                gameIds[index]]['imageUrl'],
+                                            gameplayMain: context
                                                 .watch<
                                                     UserFavouriteGameProvider>()
-                                                .userFavouriteGameList
-                                                .length)
-                                    // ? LoadingAnime(
-                                    //     ProjectVariables.SEXY_WHITE,
-                                    //     size: 50,
-                                    //   )
-                                    ? Container()
-                                    : Container(),
-                              ],
-                            );
-                          }),
-                        ),
-                      )
-                    // : Padding(
-                    //     padding: EdgeInsets.only(
-                    //         top: MediaQuery.of(context).size.height * 0.35),
-                    //     child: LoadingAnime(ProjectVariables.SEXY_WHITE),
-                    //   ),
-                    : Container(),
+                                                .favGameDetails[gameIds[index]]
+                                                    ['gameplayMain']
+                                                .toString(),
+                                            gameplayMainExtra: context
+                                                .watch<
+                                                    UserFavouriteGameProvider>()
+                                                .favGameDetails[gameIds[index]]
+                                                    ['gameplayMainExtra']
+                                                .toString(),
+                                            gameplayCompletionist: context
+                                                .watch<
+                                                    UserFavouriteGameProvider>()
+                                                .favGameDetails[gameIds[index]]
+                                                    ['gameplayCompletionist']
+                                                .toString(),
+                                            isGameAddedInFavList: true,
+                                            isWidgetFavPage: true,
+                                          ),
+                                    (index + 1 ==
+                                                context
+                                                    .watch<
+                                                        UserFavouriteGameProvider>()
+                                                    .favGameDetails
+                                                    .length &&
+                                            _indexForCount + 1 <
+                                                context
+                                                    .watch<
+                                                        UserFavouriteGameProvider>()
+                                                    .userFavouriteGameList
+                                                    .length)
+                                        // ? LoadingAnime(
+                                        //     ProjectVariables.SEXY_WHITE,
+                                        //     size: 50,
+                                        //   )
+                                        ? Container()
+                                        : Container(),
+                                  ],
+                                );
+                              }),
+                            ),
+                          )
+                        // : Padding(
+                        //     padding: EdgeInsets.only(
+                        //         top: MediaQuery.of(context).size.height * 0.35),
+                        //     child: LoadingAnime(ProjectVariables.SEXY_WHITE),
+                        //   ),
+                        : Container(),
                 (loading == true &&
                         _indexForCount > 1 &&
                         _indexForCount <
@@ -310,7 +330,8 @@ class _UserFavState extends State<UserFav> {
                         size: 50,
                       )
                     : Container(),
-                // (_shouldShowBigLoader == true)
+                // (_shouldLoadBigLoaderProgrammatically
+                // == true)
                 //     ? Container(
                 //         margin: EdgeInsets.only(
                 //             top: MediaQuery.of(context).size.height * 0.5),
@@ -319,7 +340,7 @@ class _UserFavState extends State<UserFav> {
                 //         ),
                 //       )
                 //     : Container(),
-                (_shouldShowBigLoader == true)
+                (_shouldLoadBigLoaderProgrammatically == true)
                     ? SizedBox(
                         height: MediaQuery.of(context).size.height * 0.8,
                         child: Column(
@@ -332,14 +353,16 @@ class _UserFavState extends State<UserFav> {
                         ),
                       )
                     : Container(),
-                // (fetchedTill < size && _shouldShowBigLoader == false)
+                // (fetchedTill < size && _shouldLoadBigLoaderProgrammatically
+                // == false)
                 //     ? Container(
                 //         child: LoadingAnime(ProjectVariables.SEXY_WHITE),
                 //         margin: EdgeInsets.only(
                 //             bottom: MediaQuery.of(context).size.height * 0.5),
                 //       )
                 //     : Container()
-                (fetchedTill < size && _shouldShowBigLoader == false)
+                (fetchedTill < size &&
+                        _shouldLoadBigLoaderProgrammatically == false)
                     ? SizedBox(
                         height: MediaQuery.of(context).size.height * 0.8,
                         child: Column(
