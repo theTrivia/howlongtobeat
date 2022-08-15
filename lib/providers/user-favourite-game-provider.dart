@@ -22,8 +22,9 @@ class UserFavouriteGameProvider extends ChangeNotifier {
     return _favGameDetails;
   }
 
-  setSearchResultToNull() {
+  setEntriesToNull() {
     _userFavouriteGameList = [];
+    _favGameDetails = {};
     notifyListeners();
   }
 

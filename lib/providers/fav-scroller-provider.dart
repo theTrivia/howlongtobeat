@@ -9,6 +9,11 @@ class FavScrollerProvider extends ChangeNotifier {
     return _fetchedTill;
   }
 
+  setEntriesToNull() {
+    _fetchedTill = 0;
+    notifyListeners();
+  }
+
   changeFetchedTillCounter(int index) {
     _fetchedTill = index;
     notifyListeners();

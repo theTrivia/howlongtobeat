@@ -6,6 +6,11 @@ class ShowOverlayLoaderProvider extends ChangeNotifier {
   //   return _shouldShowOverlayLoader;
   // }
 
+  setEntriesToNull() {
+    shouldShowOverlayLoader = false;
+    notifyListeners();
+  }
+
   changeShowOverlayState(s) {
     shouldShowOverlayLoader = s;
     notifyListeners();

@@ -12,6 +12,11 @@ class PopularGamesProvider extends ChangeNotifier {
     return _popularGameResult;
   }
 
+  setEntriesToNull() {
+    _popularGameResult = [];
+    notifyListeners();
+  }
+
   getPopularGames() async {
     try {
       var result =
