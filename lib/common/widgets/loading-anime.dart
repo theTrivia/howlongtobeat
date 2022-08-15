@@ -5,7 +5,8 @@ import '../../project-variables.dart';
 
 class LoadingAnime extends StatelessWidget {
   final Color color;
-  LoadingAnime(this.color);
+  final double size;
+  LoadingAnime(this.color, {this.size: 100});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class LoadingAnime extends StatelessWidget {
       child: LoadingAnimationWidget.fallingDot(
         // color: const Color.fromARGB(255, 28, 28, 198),
         color: color,
-        size: 100,
+        size: size,
       ),
     );
   }

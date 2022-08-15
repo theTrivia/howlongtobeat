@@ -12,12 +12,17 @@ class PopularGamesProvider extends ChangeNotifier {
     return _popularGameResult;
   }
 
+  setEntriesToNull() {
+    _popularGameResult = [];
+    notifyListeners();
+  }
+
   getPopularGames() async {
     try {
       var result =
           await http.get(Uri.parse(PrivateCreds.HLTB_SERVER + 'popularGames'));
       _popularGameResult = jsonDecode(result.body)['popularGames'];
-      print(_popularGameResult);
+      // print(_popularGameResult);
       notifyListeners();
     } catch (e) {
       print(e);

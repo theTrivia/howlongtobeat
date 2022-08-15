@@ -4,13 +4,19 @@ import './helper-function.dart';
 class PerformSingup {
   static performSignup(email, password) async {
     var createUserResult = await createUser(email, password);
-    var res = await addNewUserToUsersDatabase(createUserResult.user.uid).then(
-      (_) {
-        return true;
-      },
-    );
-    // print(res);
-    return res;
+
+    if (createUserResult['signupStatus'] == 'success') {
+      await addNewUserToUsersDatabase(
+              createUserResult['userCredential'].user.uid)
+          .then(
+        (res) {
+          return true;
+        },
+      );
+      return {'signupStatus': 'signup-success'};
+    } else if (createUserResult['signupStatus'] == 'email-already-in-use') {
+      return {'signupStatus': 'email-already-in-use'};
+    }
   }
 
   static createUser(email, password) async {
@@ -18,16 +24,9 @@ class PerformSingup {
       final signupCreds = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      return signupCreds;
+      return {'signupStatus': 'success', 'userCredential': signupCreds};
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        // AppLogger.printErrorLog('user not found');
-        print(e.code);
-      } else if (e.code == 'wrong-password') {
-        // AppLogger.printErrorLog('wrong password');
-        print(e.code);
-      }
-      return {'loginStatus': e.code, 'userCredential': {}};
+      return {'signupStatus': e.code, 'userCredential': {}};
     }
   }
 }

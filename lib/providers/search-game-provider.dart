@@ -12,7 +12,7 @@ class SearchGameProvider extends ChangeNotifier {
     return _searchResult;
   }
 
-  setSearchResultToNull() {
+  setEntriesToNull() {
     _searchResult = [];
     notifyListeners();
   }

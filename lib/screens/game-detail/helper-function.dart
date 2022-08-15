@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:hltb/private-creds.dart';
 import 'package:http/http.dart' as http;
 
-import '../../project-variables.dart';
-
 String cleanGameNameForMetacritic(String gameName) {
   // print(gameName);
   final cleanedGameName = gameName
@@ -54,7 +52,7 @@ fetchGameDetailFromMetcriticBackendServer(
           uniformPlatform +
           '/' +
           cleanedGameName));
-  // print(res);
+
   return res;
 }
 

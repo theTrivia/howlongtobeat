@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hltb/providers/show-overlaw-loader-provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/functions/on-fav-icon-pressed.dart';
@@ -18,6 +19,9 @@ class GameCard extends StatefulWidget {
   final String gameplayCompletionist;
   final bool isGameAddedInFavList;
 
+  //variable to encounter if the widget is FavPage. If the widget is so then, default icon will be FontAwesomeIcons.heartCrack.
+  var isWidgetFavPage;
+
   GameCard({
     required this.id,
     required this.name,
@@ -26,6 +30,7 @@ class GameCard extends StatefulWidget {
     required this.gameplayMainExtra,
     required this.gameplayCompletionist,
     required this.isGameAddedInFavList,
+    this.isWidgetFavPage: false,
   });
 
   @override
@@ -38,8 +43,8 @@ class _GameCardState extends State<GameCard> {
   var _favIcon = 0;
 
   doAsyncJob() async {
-    await Provider.of<UserFavouriteGameProvider>(context, listen: false)
-        .fetchFavouriteGameDetails();
+    // await Provider.of<UserFavouriteGameProvider>(context, listen: false)
+    //     .fetchFavouriteGameDetails();
   }
 
   @override
@@ -127,7 +132,38 @@ class _GameCardState extends State<GameCard> {
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      onFavIconPress(widget.id, context);
+                      //snackbar code needs to be refactored.
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: ProjectVariables.MAIN_COLOR,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          content: Container(
+                            color: ProjectVariables.MAIN_COLOR,
+                            child: Text(
+                              'Saving',
+                              style: GoogleFonts.barlowCondensed(
+                                color: ProjectVariables.SEXY_WHITE,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          )));
+
+                      // if (context
+                      //         .watch<ShowOverlayLoaderProvider>()
+                      //         .shouldShowOverlayLoader ==
+                      //     true)
+                      if (Provider.of<ShowOverlayLoaderProvider>(context,
+                                  listen: false)
+                              .shouldShowOverlayLoader ==
+                          true) {
+                        print('cannot perform action as some process is going');
+                        return;
+                      } else {
+                        onFavIconPress(widget.id, context);
+                      }
+
                       setState(() {
                         if (_favIcon == 0) {
                           print(_favIcon);
@@ -141,17 +177,26 @@ class _GameCardState extends State<GameCard> {
                           });
                         }
                       });
+                      // Provider.of<ShowOverlayLoaderProvider>(context,
+                      //         listen: false)
+                      //     .changeShowOverlayState(false);
                     },
-                    // icon: (widget.isGameAddedInFavList == true)
-                    //     ? Icon(FontAwesomeIcons.heartCrack)
-                    //     : Icon(FontAwesomeIcons.solidHeart),
-                    icon: (_favIcon == 0)
-                        ? Icon(
-                            FontAwesomeIcons.solidHeart,
+                    // icon: (_favIcon == 0)
+                    //     ? const Icon(
+                    //         FontAwesomeIcons.solidHeart,
+                    //         color: Colors.white,
+                    //       )
+                    //     : const Icon(
+                    //         FontAwesomeIcons.heartCrack,
+                    //         color: Colors.white,
+                    //       ),
+                    icon: (_favIcon != 0 || widget.isWidgetFavPage == true)
+                        ? const Icon(
+                            FontAwesomeIcons.heartCrack,
                             color: Colors.white,
                           )
-                        : Icon(
-                            FontAwesomeIcons.heartCrack,
+                        : const Icon(
+                            FontAwesomeIcons.solidHeart,
                             color: Colors.white,
                           ),
                     color: Colors.white,

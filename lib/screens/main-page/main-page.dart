@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hltb/screens/popular-games/popular-games-page.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../providers/show-overlaw-loader-provider.dart';
 import '../../providers/user-favourite-game-provider.dart';
 import '../../project-variables.dart';
 import '../search-page/search-page.dart';
@@ -17,10 +19,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   var _selectedindex = 0;
-  static List<Widget> _widgetOptions = [
-    SearchPage(),
-    UserFav(),
-  ];
 
   void _onItemTapped(index) {
     setState(() {
@@ -28,8 +26,20 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  //method to handle when game data is still being added.
+  _bogus(index) {
+    setState(() {
+      _selectedindex = _selectedindex;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> _widgetOptions = [
+      SearchPage(),
+      UserFav(context.watch<UserFavouriteGameProvider>().userFavouriteGameList),
+      const PopularGamesPage(),
+    ];
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedindex),
       extendBody: true,
@@ -50,10 +60,19 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.solidHeart),
               label: 'Favourites',
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.fire),
+              label: 'Popular',
             )
           ],
           currentIndex: _selectedindex,
-          onTap: _onItemTapped,
+          onTap: (context
+                      .watch<ShowOverlayLoaderProvider>()
+                      .shouldShowOverlayLoader ==
+                  false)
+              ? _onItemTapped
+              : _bogus,
         ),
       ),
     );

@@ -12,7 +12,7 @@ class UserFavouriteGameProvider extends ChangeNotifier {
   final secureStorage = FlutterSecureStorage();
   final db = FirebaseFirestore.instance;
   var _userFavouriteGameList = [];
-  var _favGameDetails = [];
+  var _favGameDetails = {};
 
   get userFavouriteGameList {
     return _userFavouriteGameList;
@@ -22,8 +22,34 @@ class UserFavouriteGameProvider extends ChangeNotifier {
     return _favGameDetails;
   }
 
-  setSearchResultToNull() {
+  setEntriesToNull() {
     _userFavouriteGameList = [];
+    _favGameDetails = {};
+    notifyListeners();
+  }
+
+/////////////////////////////////////// Methods to alter _userFavouriteGameList ////////////////////////////////
+  addFavGameIdToList(id) {
+    _userFavouriteGameList.add(id);
+    notifyListeners();
+  }
+
+  removeFavGameIdFromList(id) {
+    _userFavouriteGameList.remove(id);
+    notifyListeners();
+  }
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  addFavGameDetailToList(Map gameDetail) {
+    gameDetail.keys.forEach((k) {
+      _favGameDetails[k] = gameDetail[k];
+    });
+
+    notifyListeners();
+  }
+
+  removeFavGameDetailFromList(gameId) {
+    _favGameDetails.removeWhere(((key, value) => key == gameId.toString()));
     notifyListeners();
   }
 
@@ -38,41 +64,11 @@ class UserFavouriteGameProvider extends ChangeNotifier {
           },
         );
     final List favGames = userData['fav-games'];
-    _userFavouriteGameList = favGames;
-    return _userFavouriteGameList;
-    // print(_userFavouriteGames);
-    // notifyListeners();
-  }
-
-  //should be called at the time of launching the application
-  fetchFavouriteGameDetails() async {
-    var gameIds = await fetchFavouriteGamesFromDatabase();
-    print(gameIds);
-    var _searchResult = [];
-
-    for (var i = 0; i < gameIds.length; i++) {
-      try {
-        var result = await http.get(
-          Uri.parse(PrivateCreds.HELPER_SERVER + 'gameDetail/' + gameIds[i]),
-        );
-        // print(result.body);
-        var formattedResult = jsonDecode(result.body)['result'];
-        // return formattedResult;
-        // print(formattedResult);
-        _searchResult.add(formattedResult);
-      } catch (e) {
-        print(e);
-      }
+    var newList = [];
+    for (int i = 0; i < favGames.length; i++) {
+      newList.add(favGames[i]);
     }
-    _favGameDetails = _searchResult;
+    _userFavouriteGameList = newList;
     notifyListeners();
   }
-
-  addFavouriteGamesToList(Game game) {
-    _favGameDetails.add(game);
-    print(_favGameDetails);
-    notifyListeners();
-  }
-
-  removeFavouriteGameFromList() {}
 }

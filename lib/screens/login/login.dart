@@ -17,17 +17,19 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final secureStorage = FlutterSecureStorage();
+  final secureStorage = const FlutterSecureStorage();
 
-  var emailTextController = new TextEditingController();
+  var emailTextController = TextEditingController();
 
-  var passwordTextController = new TextEditingController();
+  var passwordTextController = TextEditingController();
   var _shouldWeLoadAnime = false;
+
+  var _shouldShowError = false;
+  String _errorMessage = '';
 
   methodToExec(context) async {
     var loggedInUser = await PerformLogin.performLogin(
         emailTextController.text, passwordTextController.text);
-    print(loggedInUser['uid']);
 
     if (loggedInUser['loginStatus'].toString() == 'success') {
       //Storing the login state in flutter secure storage
@@ -39,7 +41,7 @@ class _LoginState extends State<Login> {
 
       //fetching users favourite games list after login
       await Provider.of<UserFavouriteGameProvider>(context, listen: false)
-          .fetchFavouriteGameDetails();
+          .fetchFavouriteGamesFromDatabase();
 
       Navigator.pushNamed(context, '/mainPage');
     }
@@ -113,6 +115,19 @@ class _LoginState extends State<Login> {
                     const SizedBox(
                       height: 10,
                     ),
+                    (_shouldShowError == true)
+                        ? Text(
+                            _errorMessage,
+                            style: GoogleFonts.barlowCondensed(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          )
+                        : Container(),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     ButtonTheme(
                       buttonColor: ProjectVariables.SEXY_WHITE,
                       minWidth: MediaQuery.of(context).size.width * 0.3,
@@ -122,13 +137,33 @@ class _LoginState extends State<Login> {
                       child: RaisedButton(
                         //User Login
                         onPressed: () async {
-                          setState(() {
-                            _shouldWeLoadAnime = true;
-                          });
+                          //email field validation
+                          if (!(emailTextController.text.contains('@') &&
+                                  emailTextController.text.contains('.')) ||
+                              emailTextController.text.isEmpty) {
+                            setState(() {
+                              _shouldShowError = true;
+                              _errorMessage = 'Please Enter Valid Email';
+                            });
+                            return;
+                          }
+
                           var loggedInUser = await PerformLogin.performLogin(
                               emailTextController.text,
                               passwordTextController.text);
-                          print(loggedInUser['uid']);
+
+                          //user entries validation
+                          if (loggedInUser['loginStatus'] == 'wrong-password' ||
+                              loggedInUser['loginStatus'] == 'user-not-found') {
+                            setState(() {
+                              _shouldShowError = true;
+                              _errorMessage = 'Incorrect email/password.';
+                            });
+                            return;
+                          }
+                          setState(() {
+                            _shouldWeLoadAnime = true;
+                          });
 
                           if (loggedInUser['loginStatus'].toString() ==
                               'success') {
@@ -144,7 +179,7 @@ class _LoginState extends State<Login> {
                             await Provider.of<UserFavouriteGameProvider>(
                                     context,
                                     listen: false)
-                                .fetchFavouriteGameDetails();
+                                .fetchFavouriteGamesFromDatabase();
 
                             await Provider.of<PopularGamesProvider>(context,
                                     listen: false)
