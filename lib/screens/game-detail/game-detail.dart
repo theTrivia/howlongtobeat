@@ -206,9 +206,8 @@ class _GameDetailState extends State<GameDetail> {
           decoration: BoxDecoration(
             // color: Colors.black.withOpacity(100),
             image: (gameDetail == null)
-                ? DecorationImage(
-                    image: NetworkImage(
-                        'https://s3.envato.com/files/16cdea6b-a392-482a-905c-541e480bc1ce/inline_image_preview.jpg'),
+                ? const DecorationImage(
+                    image: AssetImage('assets/images/hltb-bg.jpg'),
                     fit: BoxFit.cover,
                   )
                 : DecorationImage(
@@ -221,9 +220,11 @@ class _GameDetailState extends State<GameDetail> {
                   ),
           ),
           child: Container(
-            color: Colors.black.withOpacity(0.8),
+            color: Colors.black.withOpacity(0.5),
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+              // filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+
               child: SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -234,20 +235,6 @@ class _GameDetailState extends State<GameDetail> {
                       ? LoadingAnime(ProjectVariables.MAIN_COLOR)
                       : Column(
                           children: [
-                            // Text(
-                            //   _savingData.toString(),
-                            //   style:
-                            //       TextStyle(color: Colors.white, fontSize: 20),
-                            // ),
-                            Text(
-                              context
-                                  .watch<ShowOverlayLoaderProvider>()
-                                  .shouldShowOverlayLoader
-                                  .toString(),
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-
                             FittedBox(
                               child: Text(
                                 gameDetail['name'],
