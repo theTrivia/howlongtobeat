@@ -9,12 +9,11 @@ import 'package:provider/provider.dart';
 
 import '../../common/widgets/input-field.dart';
 import '../../common/widgets/loading-anime.dart';
-import '../../methods/logout.dart';
 import '../../project-variables.dart';
 import '../../providers/search-game-provider.dart';
 import '../../providers/show-overlaw-loader-provider.dart';
 import '../games-list/games-list.dart';
-import '../static-widgets/start-searching.dart';
+import '../../common/widgets/logout-button.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -77,16 +76,7 @@ class _SearchPageState extends State<SearchPage> {
                           fontSize: 35,
                         ),
                       ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.logout,
-                          color: ProjectVariables.SEXY_WHITE,
-                        ),
-                        onPressed: () async {
-                          await Logout.onLogout(context);
-                          Navigator.pushNamed(context, '/splashScreen');
-                        },
-                      )
+                      const LogoutButton(),
                     ],
                   ),
                 ),
