@@ -163,30 +163,6 @@ class _GameDetailState extends State<GameDetail> {
     });
   }
 
-  // abc() {
-  //   print('hello');
-  //   print(context
-  //       .watch<ShowOverlayLoaderProvider>()
-  //       .shouldShowOverlayLoader
-  //       .toString());
-  //   if (context.watch<ShowOverlayLoaderProvider>().shouldShowOverlayLoader ==
-  //       false) {
-  //     return Future.value(false);
-  //   } else {
-  //     Navigator.pop(context);
-  //     return Future.value(true);
-  //   }
-  // }
-
-  goBack() {
-    Navigator.pop(context);
-    return Future.value(true);
-  }
-
-  stay() {
-    return Future.value(false);
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

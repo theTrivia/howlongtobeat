@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ShowOverlayLoaderProvider extends ChangeNotifier {
-  var shouldShowOverlayLoader = false;
-  // get shouldShowOverlayLoader {
-  //   return _shouldShowOverlayLoader;
-  // }
+  var _shouldShowOverlayLoader = false;
+  get shouldShowOverlayLoader {
+    return _shouldShowOverlayLoader;
+  }
 
   setEntriesToNull() {
-    shouldShowOverlayLoader = false;
+    _shouldShowOverlayLoader = false;
     notifyListeners();
   }
 
   changeShowOverlayState(s) {
-    shouldShowOverlayLoader = s;
+    _shouldShowOverlayLoader = s;
     notifyListeners();
   }
 }

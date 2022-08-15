@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hltb/providers/popular-games-provider.dart';
+import 'package:hltb/screens/splash-screen/footer.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -154,6 +155,7 @@ class _InitialLoadingScreenState extends State<SplashScreen> {
             ],
           ),
         ),
+        bottomNavigationBar: const Footer(),
       ),
     );
   }

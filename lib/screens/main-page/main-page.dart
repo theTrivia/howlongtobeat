@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hltb/screens/popular-games/popular-games-page.dart';
 
 import 'package:provider/provider.dart';
 
@@ -21,16 +21,6 @@ class _MainPageState extends State<MainPage> {
   var _selectedindex = 0;
 
   void _onItemTapped(index) {
-    // if (context.watch<ShowOverlayLoaderProvider>().shouldShowOverlayLoader ==
-    //     false) {
-    //   setState(() {
-    //     _selectedindex = index;
-    //   });
-    // } else {
-    //   setState(() {
-    //     _selectedindex = _selectedindex;
-    //   });
-    // }
     setState(() {
       _selectedindex = index;
     });
@@ -48,6 +38,7 @@ class _MainPageState extends State<MainPage> {
     List<Widget> _widgetOptions = [
       SearchPage(),
       UserFav(context.watch<UserFavouriteGameProvider>().userFavouriteGameList),
+      const PopularGamesPage(),
     ];
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedindex),
@@ -69,6 +60,10 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
               icon: FaIcon(FontAwesomeIcons.solidHeart),
               label: 'Favourites',
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.fire),
+              label: 'Popular',
             )
           ],
           currentIndex: _selectedindex,
