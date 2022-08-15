@@ -8,7 +8,10 @@ addNewUserToUsersDatabase(String uid) async {
         'user-id': uid,
         'fav-games': [],
       },
-    );
+    ).then((_) {
+      print('Successfully added user to user\'s db');
+      return 'success';
+    });
   } catch (e) {
     print(e);
   }

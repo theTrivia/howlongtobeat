@@ -12,11 +12,6 @@ class PerformLogin {
         'loginStatus': 'success',
       };
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print(e.code);
-      } else if (e.code == 'wrong-password') {
-        print(e.code);
-      }
       return {'loginStatus': e.code, 'userCredential': {}};
     }
   }
